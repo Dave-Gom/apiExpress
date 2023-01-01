@@ -1,9 +1,13 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import { deleteItem, getItem, getItems, postItem, updateItem } from "../controllers/ItemController";
+import { logMiddleware } from "../middlewares/log";
 
 const router = Router();
 
-router.get('/items', (req: Request, res: Response) => {
-    res.send({ data: 'Aqui van los modelos' });
-});
+router.get('/', logMiddleware, getItems);
+router.get('/:id', getItem);
+router.post('/', postItem);
+router.put('/:id', updateItem);
+router.delete('/:id', deleteItem);
 
 export { router };

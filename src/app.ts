@@ -1,27 +1,35 @@
 import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
+import '../src/models/Item';
 import { sequelize } from './database/database';
-import { router } from './routes/item';
+import { router } from './routes/index';
+
+const main = async () => {
+    try {
+        const PORT = process.env.PORT || 3000;
+        const app = express();
+        app.use(express.urlencoded({
+            extended: true
+        }));
+        app.use(express.json());
+        app.use(cors());
+        app.use(router);
+        const bd = await sequelize.sync();
+        if (bd)
+            console.log("Se la bd se ha conectado y actualizado exitosamente");
+        else
+            console.log("Ha ocurrido un error con la bd", bd);
 
 
-const PORT = process.env.PORT || 3000;
-const app = express();
 
-app.use(cors());
-app.use(router);
-sequelize.authenticate().then(() => {
-    console.log(
-        'conexion establecida exitosamente'
-    );
+        app.listen(PORT, () => {
+            console.log(`listo por el puerto ${PORT}`);
 
-})
-    .catch(err => {
-        console.log(err);
-        console.log("error en sequelize");
+        });
+    } catch (error) {
+        console.error('Ha ocurrido un error', error);
+    }
+}
 
-    })
-app.listen(PORT, () => {
-    console.log(`listo por el puerto ${PORT}`);
-
-})
+main();
