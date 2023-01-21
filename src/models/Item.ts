@@ -1,21 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database/database";
+import { CarInterface, GASENUM } from "../interfaces/car.interface";
 
-enum GASENUM {
-    GASOLINE = 'GASOLINE',
-    ELECTRIC = 'ELECTRIC',
-}
 
-export interface Car {
-    id: number,
-    color: string,
-    gas: GASENUM,
-    year: number,
-    description: string,
-    price: number
-}
 
-export const Item = sequelize.define<Model, Car>('Items', {
+export const Item = sequelize.define<Model, CarInterface>('Items', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

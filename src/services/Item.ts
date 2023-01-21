@@ -1,7 +1,8 @@
-import { Car, Item } from "../models/Item";
+import { CarInterface } from "../interfaces/car.interface";
+import { Item } from "../models/Item";
 
 
-export const insertCar = async (Car: Car) => {
+export const insertCar = async (Car: CarInterface) => {
     try {
         const responseInsert = await Item.create({ ...Car });
 
@@ -44,7 +45,7 @@ export const getCar = async (id: string) => {
     }
 }
 
-export const updateCar = async (id: string, data: Car) => {
+export const updateCar = async (id: string, data: CarInterface) => {
     try {
         const responseUpdate = await Item.update(data, { where: { id } });
 

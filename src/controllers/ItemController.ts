@@ -65,6 +65,7 @@ export const deleteItem = async ({ params }: Request, res: Response) => {
     try {
         const { id } = params;
         const deleteResponse = await deleteCar(id);
+
         if (deleteResponse)
             res.send(deleteResponse);
         else
@@ -73,5 +74,4 @@ export const deleteItem = async ({ params }: Request, res: Response) => {
     } catch (error) {
         handleHttp(res, `${error}`)
     }
-
-}
+};
