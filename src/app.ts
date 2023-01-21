@@ -1,8 +1,6 @@
 import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
-import '../src/models/Item';
-import "../src/models/user";
 import { sequelize } from './database/database';
 import { router } from './routes/index';
 
@@ -21,7 +19,6 @@ const main = async () => {
             console.log("Se la bd se ha conectado y actualizado exitosamente");
         else
             console.log("Ha ocurrido un error con la bd", bd);
-
 
 
         app.listen(PORT, () => {

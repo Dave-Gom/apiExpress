@@ -1,4 +1,4 @@
-import { CarInterface } from "../interfaces/car.interface";
+import { CarInterface } from "../interfaces/Car.interface";
 import { Item } from "../models/Item";
 
 

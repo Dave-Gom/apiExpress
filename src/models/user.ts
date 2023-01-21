@@ -1,12 +1,12 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database/database";
-import { UserInterface as user } from "../interfaces/user.interface";
+import { UserInterface } from "../interfaces/User.interface";
 
 
 
 
 
-export const User = sequelize.define<Model, user>('users', {
+export const User = sequelize.define<Model, UserInterface>('users', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

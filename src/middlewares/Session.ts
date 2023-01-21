@@ -1,22 +1,26 @@
 import { NextFunction, Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
 import { virifyToken } from "../utils/jdt.handler";
 
-export const checkJWT = (req: Request, res: Response, next: NextFunction) => {
+export interface UserRequest extends Request{
+    user?: string | JwtPayload;
+}
+
+export const checkJWT = (req: UserRequest, res: Response, next: NextFunction) => {
     try {
         const jwtByUser = req.headers.authorization || '';
         const jwt = jwtByUser.split(' ').pop();
-        const isOk = virifyToken(`${jwt}`);
+        const isUser = virifyToken(`${jwt}`);
         
-        if (!isOk) {
+        if (!isUser) {
             res.status(401);
             res.send("Invalid JWT");
         }
         else {
-            console.log("Is ok", isOk);
+            req.user = isUser;
             next();
         }
     } catch (error) {
-        console.log(error);
         res.status(402);
         res.send("Sesion no valida");
     }

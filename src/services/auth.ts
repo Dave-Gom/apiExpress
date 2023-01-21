@@ -1,5 +1,5 @@
-import { AuthInterface } from "../interfaces/auth.interface";
-import { UserInterface } from "../interfaces/user.interface";
+import { AuthInterface } from "../interfaces/Auth.interface";
+import { UserInterface } from "../interfaces/User.interface";
 import { User } from "../models/user";
 import { generateToken } from "../utils/jdt.handler";
 import { encript, verify } from "../utils/password.handler";
