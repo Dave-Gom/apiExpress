@@ -1,11 +1,19 @@
-import 'dotenv/config';
-import { Sequelize } from 'sequelize';
+import "dotenv/config";
+import { Sequelize } from "sequelize";
 
-const USER = process.env.BDUSER || 'root'; /* no se por que no esta funcionando */
+const DB_USERNAME =
+  process.env.DB_USERNAME || "dave"; /* no se por que no esta funcionando */
+const DB_DATABASE = process.env.DB_DATABASE || "nombre_sistema";
+const DB_PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 3360;
 
-export const sequelize = new Sequelize('practica_express', USER, '', {
-    host: 'localhost',
-    password: process.env.BDPASSWORD,
-    dialect: 'mysql',
-    port: 8889
-});
+export const sequelize = new Sequelize(
+  DB_DATABASE,
+  DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    host: "dbservice",
+    password: process.env.DB_PASSWORD,
+    dialect: "mysql",
+    port: DB_PORT,
+  }
+);
