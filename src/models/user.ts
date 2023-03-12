@@ -1,10 +1,6 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../database/database";
-import { UserInterface } from "../interfaces/User.interface";
-
-
-
-
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../database/database';
+import { AdminEnum, UserInterface } from '../interfaces/User.interface';
 
 export const User = sequelize.define<Model, UserInterface>('users', {
     id: {
@@ -14,19 +10,20 @@ export const User = sequelize.define<Model, UserInterface>('users', {
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
-    description: {
-        type: DataTypes.STRING,
-        defaultValue: "Soy una descriptcion"
+    role: {
+        type: DataTypes.ENUM(AdminEnum.SU, AdminEnum.ADMIN),
+        allowNull: false,
+        defaultValue: AdminEnum.ADMIN,
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
-    }
+        allowNull: false,
+    },
 });

@@ -5,8 +5,11 @@ services:
     build: .
     ports:
       - "8000:3000"
+    volumes:
+      - .:/home/app
     links:
       - dbservice
+
   dbservice:
     image: mysql:8.0.32
     ports:

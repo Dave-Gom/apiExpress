@@ -1,6 +1,6 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../database/database";
-import { StorageInterface } from "../interfaces/Storage.interface";
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../database/database';
+import { StorageInterface } from '../interfaces/Storage.interface';
 
 export const Storage = sequelize.define<Model, StorageInterface>('storage', {
     fileName: {
@@ -12,6 +12,4 @@ export const Storage = sequelize.define<Model, StorageInterface>('storage', {
     path: {
         type: DataTypes.STRING,
     },
-  },
-);
-
+});

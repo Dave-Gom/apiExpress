@@ -16,14 +16,13 @@ const main = async () => {
         app.use(router);
         const bd = await sequelize.sync();
         if (bd)
-            console.log("Se la bd se ha conectado y actualizado exitosamente");
+            console.log("Se la bd se ha conectado y actualizado exitosamente xd");
         else
             console.log("Ha ocurrido un error con la bd", bd);
 
 
         app.listen(PORT, () => {
-            console.log(`listo por el puerto ${PORT}`);
-
+            console.log(`listo por el puerto ${PORT} xdd`);
         });
     } catch (error) {
         console.error('Ha ocurrido un error', error);

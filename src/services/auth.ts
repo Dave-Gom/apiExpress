@@ -5,13 +5,13 @@ import { generateToken } from "../utils/jdt.handler";
 import { encript, verify } from "../utils/password.handler";
 
 
-export const registerNewUser = async ({ email, password, name }: UserInterface) => {
+export const registerNewUser = async ({ email, password, name, role }: UserInterface) => {
     try {
         const check = await User.findOne({ where: { email } });
         if (check) throw "Usuario ya existe"
         else {
             const passwordHash = await encript(password);
-            const registerNewUser = await User.create({ email, password: passwordHash, name });
+            const registerNewUser = await User.create({ email, password: passwordHash, name, role });
             if (registerNewUser) {
                 return registerNewUser;
             }
