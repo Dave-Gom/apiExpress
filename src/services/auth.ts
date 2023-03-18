@@ -1,27 +1,25 @@
-import { AuthInterface } from "../interfaces/Auth.interface";
-import { UserInterface } from "../interfaces/User.interface";
-import { User } from "../models/user";
-import { generateToken } from "../utils/jdt.handler";
-import { encript, verify } from "../utils/password.handler";
-
+import { AuthInterface } from '../interfaces/Auth.interface';
+import { UserInterface } from '../interfaces/User.interface';
+import User from '../models/user';
+import { generateToken } from '../utils/jdt.handler';
+import { encript, verify } from '../utils/password.handler';
 
 export const registerNewUser = async ({ email, password, name, role }: UserInterface) => {
     try {
         const check = await User.findOne({ where: { email } });
-        if (check) throw "Usuario ya existe"
+        if (check) throw 'Usuario ya existe';
         else {
             const passwordHash = await encript(password);
             const registerNewUser = await User.create({ email, password: passwordHash, name, role });
             if (registerNewUser) {
                 return registerNewUser;
-            }
-            else throw "No se pudo crear el usuario";
+            } else throw 'No se pudo crear el usuario';
         }
     } catch (error) {
         console.error(error);
         return null;
     }
-}
+};
 
 export const loginUser = async ({ email, password }: AuthInterface) => {
     try {
@@ -33,12 +31,9 @@ export const loginUser = async ({ email, password }: AuthInterface) => {
                 const data = { token, user: check.dataValues };
                 return data;
             }
-            return "Contraseña incorrecta";
-        }
-        else throw "No existe usuario";
-
+            return 'Contraseña incorrecta';
+        } else throw 'No existe usuario';
     } catch (error) {
         return error;
     }
 };
-
