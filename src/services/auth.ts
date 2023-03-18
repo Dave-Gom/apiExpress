@@ -4,13 +4,14 @@ import User from '../models/user';
 import { generateToken } from '../utils/jdt.handler';
 import { encript, verify } from '../utils/password.handler';
 
-export const registerNewUser = async ({ email, password, name, role }: UserInterface) => {
+export const registerNewUser = async (userData: UserInterface) => {
+    const { email, password } = userData;
     try {
         const check = await User.findOne({ where: { email } });
         if (check) throw 'Usuario ya existe';
         else {
             const passwordHash = await encript(password);
-            const registerNewUser = await User.create({ email, password: passwordHash, name, role });
+            const registerNewUser = await User.create({ ...userData, password: passwordHash });
             if (registerNewUser) {
                 return registerNewUser;
             } else throw 'No se pudo crear el usuario';

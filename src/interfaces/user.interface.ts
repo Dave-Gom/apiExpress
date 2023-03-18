@@ -8,8 +8,10 @@ export enum AdminEnum {
 export interface UserInterface extends AuthInterface {
     id: number;
     name: string;
-    email: string;
-    password: string;
-    birthDate: string;
+    birthDate: Date;
+    nacionalidad: string;
+    direccion: string;
+    ciudad: string;
+    ocupacion: string;
     role: keyof AdminEnum;
 }

@@ -3,7 +3,6 @@ import { sequelize } from '../../database/database';
 import { HeroSection } from '../../interfaces/SectionInterface';
 import { Page } from '../Pages';
 import User from '../user';
-import { HeroSectionsPages } from './HeroSectionsPages';
 
 const HeroSection = sequelize.define<Model, HeroSection>(
     'heroSection',
@@ -63,12 +62,14 @@ const HeroSection = sequelize.define<Model, HeroSection>(
 );
 
 HeroSection.belongsTo(User, {
+    as: 'User',
     foreignKey: 'author',
     constraints: false,
 });
 
 HeroSection.belongsToMany(Page, {
-    through: HeroSectionsPages,
+    as: 'Page',
+    through: 'heroSectionPages',
     foreignKey: 'pageId',
 });
 
