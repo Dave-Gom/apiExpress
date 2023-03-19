@@ -35,6 +35,10 @@ const Page = sequelize.define<Model, PageInteface>(
             },
             allowNull: false,
         },
+        deletedAt: {
+            type: DataTypes.DATE,
+            defaultValue: null,
+        },
     },
     {
         timestamps: true,

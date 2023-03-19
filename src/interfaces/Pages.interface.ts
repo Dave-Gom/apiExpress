@@ -4,4 +4,5 @@ export interface PageInteface {
     active: boolean;
     updatedBy: number | null;
     author: number;
+    deletedAt: Date | null;
 }
