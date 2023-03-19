@@ -3,8 +3,6 @@ import { loginUser, registerNewUser } from '../services/auth';
 import { handleHttp } from '../utils/error.handler';
 
 export const RegisterController = async ({ body }: Request, res: Response) => {
-    console.log('data', new Date());
-
     try {
         const responseRegister = await registerNewUser(body);
         if (responseRegister) {

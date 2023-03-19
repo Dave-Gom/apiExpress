@@ -1,6 +1,6 @@
-import { JwtPayload, sign, verify } from "jsonwebtoken";
+import { sign, verify } from 'jsonwebtoken';
 
-const clientSecret = process.env.CLIENT_SECRET || "clientSecret";
+const clientSecret = process.env.CLIENT_SECRET || 'clientSecret';
 
 export const generateToken = async (id: string) => {
     const jwt = sign({ id }, clientSecret);
@@ -10,4 +10,4 @@ export const generateToken = async (id: string) => {
 export const virifyToken = (jwt: string) => {
     const isOk = verify(jwt, clientSecret);
     return isOk;
-}
+};

@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/database';
-import { AdminEnum, UserInterface } from '../interfaces/User.interface';
+import { AdminEnum, UserInterface } from '../interfaces/user.interface';
 
 const User = sequelize.define<Model, UserInterface>('users', {
     id: {

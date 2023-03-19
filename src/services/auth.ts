@@ -1,9 +1,8 @@
-import { verify } from 'jsonwebtoken';
 import { AuthInterface } from '../interfaces/Auth.interface';
 import { UserInterface } from '../interfaces/user.interface';
 import User from '../models/user';
 import { generateToken } from '../utils/jdt.handler';
-import { encript } from '../utils/password.handler';
+import { encript, verify } from '../utils/password.handler';
 
 export const registerNewUser = async (userData: UserInterface) => {
     const { email, password } = userData;
@@ -25,9 +24,10 @@ export const registerNewUser = async (userData: UserInterface) => {
 
 export const loginUser = async ({ email, password }: AuthInterface) => {
     try {
+        console.log('data: ', { email, password });
         const check = await User.findOne({ where: { email } });
         if (check && check.dataValues) {
-            const isCorrect = verify(password, check.dataValues.password);
+            const isCorrect = await verify(password, check.dataValues.password);
             if (isCorrect) {
                 const token = await generateToken(check.dataValues.email);
                 const data = { token, user: check.dataValues };
