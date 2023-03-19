@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../../database/database';
-import { OfertaSections } from '../../interfaces/SectionInterface';
+import { OfertaSections } from '../../interfaces/Section.interface';
 import { Page } from '../Pages';
 
 const OfertasSectionPages = sequelize.define<Model, OfertaSections>(

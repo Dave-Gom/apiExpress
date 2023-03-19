@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/database';
-import { PostInterface } from '../interfaces/Post';
+import { PostInterface } from '../interfaces/Post.interface';
 
 export const Post = sequelize.define<Model, PostInterface>(
     'users',

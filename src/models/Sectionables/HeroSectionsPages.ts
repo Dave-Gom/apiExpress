@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../../database/database';
-import { HeroSections } from '../../interfaces/SectionInterface';
+import { HeroSections } from '../../interfaces/Section.interface';
 import User from '../user';
 
 const HeroSectionsPages = sequelize.define<Model, HeroSections>(

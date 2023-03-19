@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../../database/database';
-import { OfertaSection } from '../../interfaces/SectionInterface';
+import { OfertaSection } from '../../interfaces/Section.interface';
 import { Page } from '../Pages';
 import User from '../user';
 import { OfertasSectionPages } from './OfertaSectionPages';
