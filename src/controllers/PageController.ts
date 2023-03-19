@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { getPagesService, insertPage } from '../services/Page.services';
+import { Model } from 'sequelize';
+import { UserInterface } from '../interfaces/user.interface';
+import User from '../models/user';
+import { getPagesService, insertPage, updatePage } from '../services/Page.services';
 import { handleHttp } from '../utils/error.handler';
 
 export const postCreatePage = async ({ body }: Request, res: Response) => {
@@ -7,7 +10,7 @@ export const postCreatePage = async ({ body }: Request, res: Response) => {
         const responseItem = await insertPage(body);
         res.send(responseItem);
     } catch (e) {
-        handleHttp(res, `ERROR_POST_ITEM: ${e}`);
+        handleHttp(res, `ERROR_POST_PAGE: ${e}`);
     }
 };
 
@@ -16,6 +19,18 @@ export const getPages = async (req: Request, res: Response) => {
         const response = await getPagesService();
         res.send(response);
     } catch (e) {
-        handleHttp(res, `ERROR_GET_ITEMS: ${e}`);
+        handleHttp(res, `ERROR_GET_PAGE:: ${e}`);
+    }
+};
+
+export const putPages = async ({ params: { id }, body }: Request, res: Response) => {
+    try {
+        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
+        if (user) {
+            const response = await updatePage(id, body, user.dataValues.id);
+            res.send(response);
+        } else throw `Usuario no existe ${body.user}`;
+    } catch (e) {
+        handleHttp(res, `ERROR_PUT_PAGE:: ${e}`);
     }
 };

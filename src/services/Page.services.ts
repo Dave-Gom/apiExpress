@@ -22,3 +22,14 @@ export const getPagesService = async () => {
         return null;
     }
 };
+
+export const updatePage = async (id: string, newData: PageInteface, user: number) => {
+    try {
+        const responseInsert = await Page.update({ ...newData, updatedBy: user }, { where: { id } });
+        if (responseInsert) return responseInsert;
+        return null;
+    } catch (error) {
+        console.error('Error al insertar la pagina ');
+        return null;
+    }
+};
