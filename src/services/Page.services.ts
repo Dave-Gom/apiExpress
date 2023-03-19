@@ -23,9 +23,9 @@ export const getPagesService = async () => {
     }
 };
 
-export const updatePage = async (id: string, newData: PageInteface, user: number) => {
+export const updatePage = async (id: string, { active, name }: PageInteface, user: number) => {
     try {
-        const responseInsert = await Page.update({ ...newData, updatedBy: user }, { where: { id } });
+        const responseInsert = await Page.update({ active, name, updatedBy: user }, { where: { id } });
         if (responseInsert) return responseInsert;
         return null;
     } catch (error) {
