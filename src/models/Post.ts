@@ -1,9 +1,10 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/database';
 import { PostInterface } from '../interfaces/Post.interface';
+import User from './user';
 
-export const Post = sequelize.define<Model, PostInterface>(
-    'users',
+const Post = sequelize.define<Model, PostInterface>(
+    'posts',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -13,13 +14,43 @@ export const Post = sequelize.define<Model, PostInterface>(
         author: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: User,
+                key: 'id',
+            },
         },
         title: { type: DataTypes.STRING },
-        mediaContent: {
+        content: {
             type: DataTypes.STRING,
+        },
+        image: {
+            type: DataTypes.STRING,
+        },
+        updatedBy: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: User,
+                key: 'id',
+            },
+        },
+        deletedAt: {
+            type: DataTypes.DATE,
+            allowNull: true,
         },
     },
     {
         timestamps: true,
     }
 );
+
+Post.belongsTo(User, {
+    as: 'User',
+    foreignKey: 'author',
+});
+
+// Post.belongsToMany(Categoria, {
+//     through: PostCategorias,
+// });
+
+export { Post };
