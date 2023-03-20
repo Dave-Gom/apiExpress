@@ -1,25 +1,30 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../../database/database';
 import { HeroSections } from '../../interfaces/Section.interface';
-import User from '../user';
+import { Page } from '../Pages';
+import { HeroSection } from './HeroSection';
 
 const HeroSectionsPages = sequelize.define<Model, HeroSections>(
     'heroSectionPages',
     {
         id: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         pageId: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             references: {
-                model: User,
+                model: Page,
                 key: 'id',
             },
         },
         heroSectionId: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
+            references: {
+                model: HeroSection,
+                key: 'id',
+            },
         },
     },
     {

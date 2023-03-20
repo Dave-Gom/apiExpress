@@ -22,7 +22,7 @@ export interface TextSection {
 }
 
 export interface HeroSections {
-    id: number;
+    id?: number;
     pageId: number;
     heroSectionId: number;
 }
@@ -57,4 +57,12 @@ export interface OfertaSection {
     author: number;
     navegate: string;
     updatedBy: number;
+}
+
+export enum SectionTypesEnum {
+    HERO = 'HERO',
+    RECOMENDADO = 'RECOMENDADO',
+    OFERTA = 'OFERTA',
+    TEXTO = 'TEXTO',
+    POSTS = 'POSTS',
 }

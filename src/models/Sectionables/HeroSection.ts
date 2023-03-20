@@ -31,25 +31,25 @@ const HeroSection = sequelize.define<Model, HeroSection>(
             allowNull: true,
         },
         author: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             references: {
                 model: User,
                 key: 'id',
             },
         },
         pageId: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             references: {
                 model: Page,
                 key: 'id',
             },
         },
         position: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             allowNull: true,
         },
         updatedBy: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             references: {
                 model: User,
                 key: 'id',
