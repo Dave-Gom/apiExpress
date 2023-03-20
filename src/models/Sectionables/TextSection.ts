@@ -10,44 +10,30 @@ const TextSection = sequelize.define<Model, TextSection>(
     {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             autoIncrement: true,
             primaryKey: true,
         },
         content: {
             type: DataTypes.STRING,
-            allowNull: true,
-            defaultValue: '',
-        },
-        active: {
-            type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false,
-        },
-        position: {
-            type: DataTypes.NUMBER,
-        },
-        pageId: {
-            type: DataTypes.NUMBER,
-            references: {
-                model: Page,
-                key: 'id',
-            },
-        },
-        updatedBy: {
-            type: DataTypes.NUMBER,
-            references: {
-                model: User,
-                key: 'id',
-            },
         },
         author: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             references: {
                 model: User,
                 key: 'id',
             },
             allowNull: false,
+        },
+        position: {
+            type: DataTypes.INTEGER,
+        },
+        updatedBy: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: User,
+                key: 'id',
+            },
         },
     },
     {
@@ -57,12 +43,10 @@ const TextSection = sequelize.define<Model, TextSection>(
 
 TextSection.belongsTo(User, {
     foreignKey: 'author',
-    constraints: false,
 });
 
 TextSection.belongsToMany(Page, {
     through: PageTextSections,
-    foreignKey: 'pageId',
 });
 
 export { TextSection };

@@ -5,7 +5,7 @@ import { SectionTypesEnum } from '../interfaces/Section.interface';
 import { UserInterface } from '../interfaces/user.interface';
 import { Page } from '../models/Pages';
 import User from '../models/user';
-import { insertHeroSectionSection } from '../services/Section.services';
+import { insertHeroSection, insertOfertaSection, insertTextSection } from '../services/Section.services';
 import { handleHttp } from '../utils/error.handler';
 
 export const postSection = async ({ body, params }: Request, res: Response) => {
@@ -15,7 +15,7 @@ export const postSection = async ({ body, params }: Request, res: Response) => {
         if (user && page) {
             switch (params.type) {
                 case SectionTypesEnum.HERO:
-                    let hero = await insertHeroSectionSection(
+                    const hero = await insertHeroSection(
                         {
                             ...body,
                         },
@@ -25,7 +25,14 @@ export const postSection = async ({ body, params }: Request, res: Response) => {
                     res.send(hero);
                     break;
                 case SectionTypesEnum.OFERTA:
-                    res.send(SectionTypesEnum.OFERTA);
+                    const oferta = await insertOfertaSection(
+                        {
+                            ...body,
+                        },
+                        page.dataValues.id,
+                        user.dataValues.id
+                    );
+                    res.send(oferta);
                     break;
                 case SectionTypesEnum.POSTS:
                     res.send(SectionTypesEnum.POSTS);
@@ -34,11 +41,17 @@ export const postSection = async ({ body, params }: Request, res: Response) => {
                     res.send(SectionTypesEnum.RECOMENDADO);
                     break;
                 case SectionTypesEnum.TEXTO:
-                    res.send(SectionTypesEnum.TEXTO);
+                    const textSection = await insertTextSection(
+                        {
+                            ...body,
+                        },
+                        page.dataValues.id,
+                        user.dataValues.id
+                    );
+                    res.send(textSection);
                     break;
                 default:
-                    res.send(SectionTypesEnum.TEXTO);
-                    break;
+                    throw new Error(`Tipo de Seccion no existe: ${params.type}`);
             }
         } else if (!user) {
             throw new Error(`Usuario no existe ${body.user}`);

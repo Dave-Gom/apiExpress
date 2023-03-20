@@ -13,6 +13,10 @@ const OfertaSection = sequelize.define<Model, OfertaSection>(
             autoIncrement: true,
             primaryKey: true,
         },
+        content: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         author: {
             type: DataTypes.INTEGER,
             references: {
@@ -26,13 +30,6 @@ const OfertaSection = sequelize.define<Model, OfertaSection>(
         },
         navegate: {
             type: DataTypes.STRING,
-        },
-        pageId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: Page,
-                key: 'id',
-            },
         },
         position: {
             type: DataTypes.INTEGER,
@@ -53,10 +50,6 @@ const OfertaSection = sequelize.define<Model, OfertaSection>(
                 model: User,
                 key: 'id',
             },
-        },
-        content: {
-            type: DataTypes.STRING,
-            allowNull: false,
         },
     },
     {

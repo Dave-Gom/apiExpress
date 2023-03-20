@@ -23,6 +23,7 @@ const PageTextSections = sequelize.define<Model, TextSections>(
             type: DataTypes.INTEGER,
             references: {
                 model: TextSection,
+                key: 'id',
             },
         },
     },

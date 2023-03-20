@@ -6,7 +6,7 @@
 // }
 
 export interface TextSections {
-    id: number;
+    id?: number;
     pageId: number;
     textSectionId: number;
 }
@@ -14,10 +14,8 @@ export interface TextSections {
 export interface TextSection {
     id: number;
     content: string;
-    pageId: number;
     author: number;
     updatedBy: number;
-    active: boolean;
     position: number;
 }
 
@@ -34,13 +32,12 @@ export interface HeroSection {
     image: string;
     opacity?: number;
     position: number;
-    pageId: number;
     author: number;
     updatedBy: number;
 }
 
 export interface OfertaSections {
-    id: number;
+    id?: number;
     pageId: number;
     ofertaSectionId: number;
 }
@@ -53,7 +50,6 @@ export interface OfertaSection {
     leftImage: string;
     rigthImage: string;
     position: number;
-    pageId: number;
     author: number;
     navegate: string;
     updatedBy: number;

@@ -37,13 +37,6 @@ const HeroSection = sequelize.define<Model, HeroSection>(
                 key: 'id',
             },
         },
-        pageId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: Page,
-                key: 'id',
-            },
-        },
         position: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -70,7 +63,6 @@ HeroSection.belongsTo(User, {
 HeroSection.belongsToMany(Page, {
     as: 'Page',
     through: 'heroSectionPages',
-    foreignKey: 'pageId',
 });
 
 export { HeroSection };
