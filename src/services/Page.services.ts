@@ -1,9 +1,9 @@
 import { PageInteface } from '../interfaces/Pages.interface';
 import { Page } from '../models/Pages';
 
-export const insertPage = async (page: PageInteface) => {
+export const insertPage = async (page: PageInteface, user: number) => {
     try {
-        const responseInsert = await Page.create({ ...page });
+        const responseInsert = await Page.create(user ? { ...page, author: user, updatedBy: user } : { ...page });
         if (responseInsert) return responseInsert;
         return null;
     } catch (error) {

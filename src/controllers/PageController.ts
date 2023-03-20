@@ -7,8 +7,11 @@ import { handleHttp } from '../utils/error.handler';
 
 export const postCreatePage = async ({ body }: Request, res: Response) => {
     try {
-        const responseItem = await insertPage(body);
-        res.send(responseItem);
+        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
+        if (user) {
+            const responseItem = await insertPage(body, user.dataValues.id);
+            res.send(responseItem);
+        } else throw new Error(`Usuario no existe ${body.user}`);
     } catch (e) {
         handleHttp(res, `ERROR_POST_PAGE: ${e}`);
     }
