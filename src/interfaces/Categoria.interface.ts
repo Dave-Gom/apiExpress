@@ -7,7 +7,7 @@ export interface CategoriaInterface {
     deletedAt: Date | null;
 }
 
-export interface PostCategorias {
+export interface PostCategoriasInterface {
     id?: number;
     idCategoria: number;
     idPost: number;

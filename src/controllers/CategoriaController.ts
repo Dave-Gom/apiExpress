@@ -3,6 +3,7 @@ import { Model } from 'sequelize';
 import { UserInterface } from '../interfaces/user.interface';
 import User from '../models/user';
 import {
+    attachPost,
     getCategoria,
     getCategorias,
     postCategoria,
@@ -84,6 +85,22 @@ export const deleteCategoria = async ({ body, params }: Request, res: Response) 
                 res.send(responseItem);
             } else {
                 throw new Error(`No se pudo eliminar la categoria con id ${params.id}`);
+            }
+        } else throw new Error(`Usuario no existe ${body.user}`);
+    } catch (e) {
+        handleHttp(res, `ERROR_DELETE_CATEGORY: ${e}`);
+    }
+};
+
+export const addPost = async ({ body, params }: Request, res: Response) => {
+    try {
+        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
+        if (user) {
+            const responseItem = await attachPost(parseInt(params.categoriaId, 10), parseInt(params.postId, 10));
+            if (responseItem) {
+                res.send(responseItem);
+            } else {
+                throw new Error(`No se pudo agregar a la categoria`);
             }
         } else throw new Error(`Usuario no existe ${body.user}`);
     } catch (e) {

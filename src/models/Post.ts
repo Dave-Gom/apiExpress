@@ -56,6 +56,7 @@ Post.belongsTo(User, {
 });
 
 Post.belongsToMany(Categoria, {
+    as: 'categorias',
     through: 'postCategorias',
 });
 
