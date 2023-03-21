@@ -56,7 +56,7 @@ Post.belongsTo(User, {
 });
 
 Post.belongsToMany(Categoria, {
-    through: 'PostCategorias',
+    through: 'postCategorias',
 });
 
 export { Post };

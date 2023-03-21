@@ -14,7 +14,6 @@ const PostCategorias = sequelize.define<Model, PostCategoriasInteface>(
         },
         idCategoria: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             references: {
                 model: Categoria,
                 key: 'id',
@@ -22,7 +21,6 @@ const PostCategorias = sequelize.define<Model, PostCategoriasInteface>(
         },
         idPost: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             references: {
                 model: Post,
                 key: 'id',
