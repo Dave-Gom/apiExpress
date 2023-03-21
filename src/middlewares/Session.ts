@@ -13,14 +13,14 @@ export const checkJWT = (req: UserRequest, res: Response, next: NextFunction) =>
         const isUser = virifyToken(`${jwt}`);
 
         if (!isUser) {
-            res.status(401);
+            res.statusCode = 401;
             res.send('Invalid JWT');
         } else {
             req.body.user = isUser;
             next();
         }
     } catch (error) {
-        res.status(402);
+        res.statusCode = 402;
         res.send('Sesion no valida');
     }
 };

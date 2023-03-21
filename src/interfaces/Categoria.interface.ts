@@ -4,7 +4,7 @@ export interface CategoriaInterface {
     author: number;
     updatedBy: number;
     active: string;
-    deletedAt?: string;
+    deletedAt: Date | null;
 }
 
 export interface PostCategorias {

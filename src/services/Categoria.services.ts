@@ -10,8 +10,58 @@ export const postCategoria = async (data: CategoriaInterface, user: number) => {
             updatedBy: user,
         });
         if (responseInsert) return responseInsert;
-        throw 'No se pudo crear la catgoria';
+        return null;
     } catch (error) {
-        return new Error(`Error al crear la Categoria, ${error})`);
+        return null;
+    }
+};
+
+export const getCategorias = async () => {
+    try {
+        const responseInsert = await Categoria.findAll<Model<CategoriaInterface>>({ where: { deletedAt: null } });
+        if (responseInsert) return responseInsert;
+        return null;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const getCategoria = async (id: string) => {
+    try {
+        const categoria = await Categoria.findOne<Model<CategoriaInterface>>({ where: { id, deletedAt: null } });
+        if (categoria !== null) return categoria;
+        return null;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const putCategoria = async ({ active, nombre }: CategoriaInterface, id: string, user: number) => {
+    try {
+        const categoria = await Categoria.update<Model<CategoriaInterface>>(
+            { active, nombre, updatedBy: user },
+            {
+                where: { id },
+            }
+        );
+        if (categoria !== null) return 'Actualizado exitosamente';
+        return null;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const softDeleteCategoria = async (id: string, user: number) => {
+    try {
+        const categoria = await Categoria.update<Model<CategoriaInterface>>(
+            { updatedBy: user, deletedAt: new Date() },
+            {
+                where: { id },
+            }
+        );
+        if (categoria !== null) return { status: 'ok' };
+        return null;
+    } catch (error) {
+        return null;
     }
 };
