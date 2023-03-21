@@ -1,3 +1,4 @@
+import { Model } from 'sequelize';
 import { PageInteface } from '../interfaces/Pages.interface';
 import { Page } from '../models/Pages';
 
@@ -25,7 +26,10 @@ export const getPagesService = async () => {
 
 export const updatePage = async (id: string, { active, name }: PageInteface, user: number) => {
     try {
-        const responseInsert = await Page.update({ active, name, updatedBy: user }, { where: { id } });
+        const responseInsert = await Page.update<Model<PageInteface>>(
+            { active, name, updatedBy: user },
+            { where: { id } }
+        );
         if (responseInsert) return responseInsert;
         return null;
     } catch (error) {

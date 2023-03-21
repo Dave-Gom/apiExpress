@@ -22,6 +22,7 @@ const Post = sequelize.define<Model, PostInterface>(
         title: { type: DataTypes.STRING },
         content: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         image: {
             type: DataTypes.STRING,
@@ -37,6 +38,10 @@ const Post = sequelize.define<Model, PostInterface>(
         deletedAt: {
             type: DataTypes.DATE,
             allowNull: true,
+        },
+        brief: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
     },
     {

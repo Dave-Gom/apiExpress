@@ -1,6 +1,7 @@
 export interface PostInterface {
     id: number;
-    title?: string;
+    title: string;
+    brief: string;
     content: string;
     author: number;
     image: string;
