@@ -11,5 +11,4 @@ export interface PostCategorias {
     id?: number;
     idCategoria: number;
     idPost: number;
-    active: boolean;
 }

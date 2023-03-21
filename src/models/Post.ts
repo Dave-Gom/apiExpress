@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/database';
 import { PostInterface } from '../interfaces/Post.interface';
+import { Categoria } from './Categorias';
 import User from './user';
 
 const Post = sequelize.define<Model, PostInterface>(
@@ -54,8 +55,8 @@ Post.belongsTo(User, {
     foreignKey: 'author',
 });
 
-// Post.belongsToMany(Categoria, {
-//     through: PostCategorias,
-// });
+Post.belongsToMany(Categoria, {
+    through: 'PostCategorias',
+});
 
 export { Post };
