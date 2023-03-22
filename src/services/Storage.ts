@@ -1,12 +1,10 @@
-
-import { Model } from "sequelize";
-import { StorageInterface } from "../interfaces/Storage.interface";
-import { Storage } from "../models/Storage";
-
+import { Model } from 'sequelize';
+import { Storage } from '../database/models/Storage';
+import { StorageInterface } from '../interfaces/Storage.interface';
 
 const registerUpload = async ({ fileName, idUser, path }: StorageInterface) => {
-  const responseItem:Model<StorageInterface> = await Storage.create({ fileName, idUser, path });
-  return responseItem;
+    const responseItem: Model<StorageInterface> = await Storage.create({ fileName, idUser, path });
+    return responseItem;
 };
 
 export { registerUpload };

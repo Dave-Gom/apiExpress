@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../database/database';
-import { PostInterface } from '../interfaces/Post.interface';
+import { PostInterface } from '../../interfaces/Post.interface';
+import { sequelize } from '../database';
 import { Categoria } from './Categorias';
 import User from './user';
 

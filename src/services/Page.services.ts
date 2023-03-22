@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
+import { Page } from '../database/models/Pages';
 import { PageInteface } from '../interfaces/Pages.interface';
-import { Page } from '../models/Pages';
 
 export const insertPage = async (page: PageInteface, user: number) => {
     try {

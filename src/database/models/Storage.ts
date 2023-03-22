@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../database/database';
-import { StorageInterface } from '../interfaces/Storage.interface';
+import { StorageInterface } from '../../interfaces/Storage.interface';
+import { sequelize } from '../database';
 
 export const Storage = sequelize.define<Model, StorageInterface>(
     'storage',

@@ -1,11 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../../database/database';
-import { TextSections } from '../../interfaces/Section.interface';
+import { HeroSections } from '../../../interfaces/Section.interface';
+import { sequelize } from '../../database';
 import { Page } from '../Pages';
-import { TextSection } from './TextSection';
+import { HeroSection } from './HeroSection';
 
-const PageTextSections = sequelize.define<Model, TextSections>(
-    'textSectionPages',
+const HeroSectionsPages = sequelize.define<Model, HeroSections>(
+    'heroSectionPages',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -19,10 +19,10 @@ const PageTextSections = sequelize.define<Model, TextSections>(
                 key: 'id',
             },
         },
-        textSectionId: {
+        heroSectionId: {
             type: DataTypes.INTEGER,
             references: {
-                model: TextSection,
+                model: HeroSection,
                 key: 'id',
             },
         },
@@ -32,4 +32,4 @@ const PageTextSections = sequelize.define<Model, TextSections>(
     }
 );
 
-export { PageTextSections };
+export { HeroSectionsPages };

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Model } from 'sequelize';
+import User from '../database/models/user';
 import { UserInterface } from '../interfaces/user.interface';
-import User from '../models/user';
 import {
     attachPost,
     getCategoria,

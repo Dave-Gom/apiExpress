@@ -1,6 +1,6 @@
+import User from '../database/models/user';
 import { AuthInterface } from '../interfaces/Auth.interface';
-import { UserInterface } from '../interfaces/user.interface';
-import User from '../models/user';
+import { UserInterface } from '../interfaces/User.interface';
 import { generateToken } from '../utils/jdt.handler';
 import { encript, verify } from '../utils/password.handler';
 

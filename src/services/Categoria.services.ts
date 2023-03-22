@@ -1,8 +1,8 @@
 import { Model } from 'sequelize';
+import { Categoria } from '../database/models/Categorias';
+import { Post } from '../database/models/Post';
+import { PostCategorias } from '../database/models/PostCategorias';
 import { CategoriaInterface, PostCategoriasInterface } from '../interfaces/Categoria.interface';
-import { Categoria } from '../models/Categorias';
-import { Post } from '../models/Post';
-import { PostCategorias } from '../models/PostCategorias';
 
 export const postCategoria = async (data: CategoriaInterface, user: number) => {
     try {

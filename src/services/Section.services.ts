@@ -1,4 +1,10 @@
 import { Model } from 'sequelize';
+import { HeroSection } from '../database/models/Sectionables/HeroSection';
+import { HeroSectionsPages } from '../database/models/Sectionables/HeroSectionsPages';
+import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
+import { OfertasSectionPages } from '../database/models/Sectionables/OfertaSectionPages';
+import { TextSection } from '../database/models/Sectionables/TextSection';
+import { PageTextSections } from '../database/models/Sectionables/TextSectionsPages';
 import {
     HeroSection as HeroSectionInterface,
     HeroSections,
@@ -7,12 +13,6 @@ import {
     TextSection as TextSectionInterface,
     TextSections,
 } from '../interfaces/Section.interface';
-import { HeroSection } from '../models/Sectionables/HeroSection';
-import { HeroSectionsPages } from '../models/Sectionables/HeroSectionsPages';
-import { OfertaSection } from '../models/Sectionables/OfertaSection';
-import { OfertasSectionPages } from '../models/Sectionables/OfertaSectionPages';
-import { TextSection } from '../models/Sectionables/TextSection';
-import { PageTextSections } from '../models/Sectionables/TextSectionsPages';
 
 export const insertHeroSection = async (section: HeroSectionInterface, page: number, user: number) => {
     try {

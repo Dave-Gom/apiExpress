@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
+import { Post } from '../database/models/Post';
 import { PostInterface } from '../interfaces/Post.interface';
-import { Post } from '../models/Post';
 
 export const insertPost = async (data: PostInterface, user: number) => {
     try {
