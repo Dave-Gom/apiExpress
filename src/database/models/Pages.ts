@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { PageInteface } from '../../interfaces/Pages.interface';
 import { sequelize } from '../database';
-import User from './user';
+import { User } from './user';
 
 const Page = sequelize.define<Model, PageInteface>(
     'pages',
@@ -22,7 +22,7 @@ const Page = sequelize.define<Model, PageInteface>(
         updatedBy: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'users',
+                model: User,
                 key: 'id',
             },
             allowNull: false,
@@ -30,7 +30,7 @@ const Page = sequelize.define<Model, PageInteface>(
         author: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'users',
+                model: User,
                 key: 'id',
             },
             allowNull: false,
@@ -45,13 +45,4 @@ const Page = sequelize.define<Model, PageInteface>(
     }
 );
 
-Page.belongsTo(User, {
-    as: 'authorDetails',
-    foreignKey: 'author',
-});
-Page.belongsTo(User, {
-    as: 'updatedByDetails',
-    foreignKey: 'updatedBy',
-});
-
-export default Page;
+export { Page };

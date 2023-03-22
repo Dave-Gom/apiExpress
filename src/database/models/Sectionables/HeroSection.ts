@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import { HeroSection } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { Page } from '../Pages';
-import User from '../user';
+import { User } from '../user';
 
 const HeroSection = sequelize.define<Model, HeroSection>(
     'heroSection',

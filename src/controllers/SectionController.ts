@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { Model } from 'sequelize';
 import { Page } from '../database/models/Pages';
-import User from '../database/models/user';
+import { User } from '../database/models/user';
 import { PageInteface } from '../interfaces/Pages.interface';
 import { SectionTypesEnum } from '../interfaces/Section.interface';
-import { UserInterface } from '../interfaces/user.interface';
+import { UserInterface } from '../interfaces/User.interface';
 import { insertHeroSection, insertOfertaSection, insertTextSection } from '../services/Section.services';
 import { handleHttp } from '../utils/error.handler';
 

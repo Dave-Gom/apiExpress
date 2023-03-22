@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import { TextSection } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { Page } from '../Pages';
-import User from '../user';
+import { User } from '../user';
 import { PageTextSections } from './TextSectionsPages';
 
 const TextSection = sequelize.define<Model, TextSection>(

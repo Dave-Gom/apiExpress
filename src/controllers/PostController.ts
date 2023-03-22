@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { Model } from 'sequelize';
-import User from '../database/models/user';
-import { UserInterface } from '../interfaces/user.interface';
+import { User } from '../database/models/user';
+import { UserInterface } from '../interfaces/User.interface';
+
 import { delPost, getPost, getPosts, insertPost, putPost } from '../services/Post';
 import { handleHttp } from '../utils/error.handler';
 

@@ -15,7 +15,7 @@ export const insertPage = async (page: PageInteface, user: number) => {
 
 export const getPagesService = async () => {
     try {
-        const responseInsert = await Page.findAll({ where: { deletedAt: null } });
+        const responseInsert = await Page.findAll({ where: { deletedAt: null }, include: 'authorDetails' });
         if (responseInsert) return responseInsert;
         return null;
     } catch (error) {

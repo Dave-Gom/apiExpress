@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { CategoriaInterface } from '../../interfaces/Categoria.interface';
 import { sequelize } from '../database';
-import User from './user';
+import { User } from './user';
 
 const Categoria = sequelize.define<Model, CategoriaInterface>(
     'categorias',

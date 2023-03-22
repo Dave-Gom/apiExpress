@@ -1,4 +1,4 @@
-import User from '../database/models/user';
+import { User } from '../database/models/user';
 import { AuthInterface } from '../interfaces/Auth.interface';
 import { UserInterface } from '../interfaces/User.interface';
 import { generateToken } from '../utils/jdt.handler';

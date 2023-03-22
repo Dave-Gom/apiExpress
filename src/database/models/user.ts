@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { AdminEnum, UserInterface } from '../../interfaces/User.interface';
 import { sequelize } from '../database';
-import Page from './Pages'; // Movido aquí
 
 const User = sequelize.define<Model, UserInterface>('users', {
     id: {
@@ -45,13 +44,4 @@ const User = sequelize.define<Model, UserInterface>('users', {
     },
 });
 
-User.hasMany(Page, {
-    foreignKey: 'author',
-    as: 'pages',
-});
-User.hasMany(Page, {
-    foreignKey: 'updatedBy',
-    as: 'updatedPages',
-});
-
-export default User;
+export { User };
