@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { Post } from '../database/models/Post';
 import { PostInterface } from '../interfaces/Post.interface';
 

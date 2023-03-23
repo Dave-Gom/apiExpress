@@ -1,9 +1,8 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { TextSection } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
-import { Page } from '../Pages';
 import { User } from '../user';
-import { PageTextSections } from './TextSectionsPages';
 
 const TextSection = sequelize.define<Model, TextSection>(
     'textSections',
@@ -40,13 +39,5 @@ const TextSection = sequelize.define<Model, TextSection>(
         timestamps: true,
     }
 );
-
-TextSection.belongsTo(User, {
-    foreignKey: 'author',
-});
-
-TextSection.belongsToMany(Page, {
-    through: PageTextSections,
-});
 
 export { TextSection };

@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { Page } from '../database/models/Pages';
 import { PageInteface } from '../interfaces/Pages.interface';
 

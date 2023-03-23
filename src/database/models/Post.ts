@@ -1,4 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { PostInterface } from '../../interfaces/Post.interface';
 import { sequelize } from '../database';
 import { Categoria } from './Categorias';

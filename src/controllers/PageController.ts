@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { User } from '../database/models/user';
 import { UserInterface } from '../interfaces/User.interface';
 import { detelePageService, getPagesService, insertPage, updatePage } from '../services/Page.services';

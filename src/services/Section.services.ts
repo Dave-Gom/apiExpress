@@ -1,17 +1,11 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { HeroSection } from '../database/models/Sectionables/HeroSection';
-import { HeroSectionsPages } from '../database/models/Sectionables/HeroSectionsPages';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
-import { OfertasSectionPages } from '../database/models/Sectionables/OfertaSectionPages';
 import { TextSection } from '../database/models/Sectionables/TextSection';
-import { PageTextSections } from '../database/models/Sectionables/TextSectionsPages';
 import {
     HeroSection as HeroSectionInterface,
-    HeroSections,
     OfertaSection as OfertaSectionInterface,
-    OfertaSections,
     TextSection as TextSectionInterface,
-    TextSections,
 } from '../interfaces/Section.interface';
 
 export const insertHeroSection = async (section: HeroSectionInterface, page: number, user: number) => {
@@ -22,10 +16,6 @@ export const insertHeroSection = async (section: HeroSectionInterface, page: num
             updatedBy: user,
         });
         if (responseInsert) {
-            const asignatePage = await HeroSectionsPages.create<Model<HeroSections>>({
-                pageId: page,
-                heroSectionId: responseInsert.dataValues.id,
-            });
             return responseInsert;
         }
         return null;
@@ -43,10 +33,6 @@ export const insertOfertaSection = async (section: OfertaSectionInterface, page:
             updatedBy: user,
         });
         if (responseInsert) {
-            const asignatePage = await OfertasSectionPages.create<Model<OfertaSections>>({
-                pageId: page,
-                ofertaSectionId: responseInsert.dataValues.id,
-            });
             return responseInsert;
         }
         return null;
@@ -64,10 +50,6 @@ export const insertTextSection = async (section: TextSectionInterface, page: num
             updatedBy: user,
         });
         if (responseInsert) {
-            const asignatePage = await PageTextSections.create<Model<TextSections>>({
-                pageId: page,
-                textSectionId: responseInsert.dataValues.id,
-            });
             return responseInsert;
         }
         return null;

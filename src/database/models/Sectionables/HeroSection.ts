@@ -1,4 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { HeroSection } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { Page } from '../Pages';

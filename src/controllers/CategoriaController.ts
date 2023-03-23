@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { Model } from 'sequelize';
+import {} from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { User } from '../database/models/user';
 import { UserInterface } from '../interfaces/User.interface';
 import {

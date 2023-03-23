@@ -1,4 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { AdminEnum, UserInterface } from '../../interfaces/User.interface';
 import { sequelize } from '../database';
 

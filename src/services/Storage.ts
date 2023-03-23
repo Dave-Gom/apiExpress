@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { Storage } from '../database/models/Storage';
 import { StorageInterface } from '../interfaces/Storage.interface';
 

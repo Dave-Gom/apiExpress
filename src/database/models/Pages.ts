@@ -1,4 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { PageInteface } from '../../interfaces/Pages.interface';
 import { sequelize } from '../database';
 import { User } from './user';
