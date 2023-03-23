@@ -1,18 +1,17 @@
 import { Request, Response } from 'express';
-import {} from 'sequelize';
 import { Model } from 'sequelize-typescript';
 import { Page } from '../database/models/Pages';
 import { User } from '../database/models/user';
 import { PageInteface } from '../interfaces/Pages.interface';
 import { SectionTypesEnum } from '../interfaces/Section.interface';
 import { UserInterface } from '../interfaces/User.interface';
-import { insertHeroSection, insertOfertaSection, insertTextSection } from '../services/Section.services';
+import { getHeros, insertHeroSection, insertOfertaSection, insertTextSection } from '../services/Section.services';
 import { handleHttp } from '../utils/error.handler';
 
-export const postSection = async ({ body, params }: Request, res: Response) => {
+export const createSection = async ({ body, params }: Request, res: Response) => {
     try {
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-        const page = await Page.findOne<Model<PageInteface>>({ where: { id: params.pageId } });
+        const page = await Page.findByPk<Model<PageInteface>>(params.pageId);
         if (user && page) {
             switch (params.type) {
                 case SectionTypesEnum.HERO:
@@ -61,5 +60,15 @@ export const postSection = async ({ body, params }: Request, res: Response) => {
         }
     } catch (e) {
         handleHttp(res, `ERROR_POST_SECTION: ${e}`);
+    }
+};
+
+export const readSection = async ({ body, params }: Request, res: Response) => {
+    const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
+    switch (params.type) {
+        case SectionTypesEnum.HERO:
+            const hero = await getHeros(params.type);
+            res.send(hero);
+            break;
     }
 };

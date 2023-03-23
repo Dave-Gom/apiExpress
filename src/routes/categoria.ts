@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import {
-    addPost,
     createCategoria,
     deleteCategoria,
     readCategoria,
@@ -16,6 +15,5 @@ router.get('/', checkJWT, readCategorias);
 router.get('/:id', checkJWT, readCategoria);
 router.put('/:id', checkJWT, updateCategoria);
 router.delete('/:id', checkJWT, deleteCategoria);
-router.post('/:categoriaId/:postId', checkJWT, addPost);
 
 export { router };

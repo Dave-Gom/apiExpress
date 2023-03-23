@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { postSection } from '../controllers/SectionController';
+import { createSection, readSection } from '../controllers/SectionController';
 import { checkJWT } from '../middlewares/Session';
 
 const router = Router();
 
-router.post('/:type/:pageId', checkJWT, postSection);
+router.post('/:type/:pageId', checkJWT, createSection);
+router.get('/:type', checkJWT, readSection);
 
 export { router };

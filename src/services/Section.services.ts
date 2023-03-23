@@ -1,4 +1,6 @@
 import { Model } from 'sequelize-typescript';
+import { HeroInstance, PageInstance } from '../database/Associations';
+import { Page } from '../database/models/Pages';
 import { HeroSection } from '../database/models/Sectionables/HeroSection';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
@@ -10,12 +12,21 @@ import {
 
 export const insertHeroSection = async (section: HeroSectionInterface, page: number, user: number) => {
     try {
-        const responseInsert = await HeroSection.create<Model<HeroSectionInterface>>({
-            ...section,
-            author: user,
-            updatedBy: user,
-        });
-        if (responseInsert) {
+        const responseInsert = await HeroSection.create<HeroInstance>(
+            {
+                ...section,
+                author: user,
+                updatedBy: user,
+            },
+            {
+                include: 'pages',
+            }
+        );
+        const pagina = await Page.findByPk<PageInstance>(page, { include: 'hero' });
+        if (responseInsert && responseInsert.addPages && pagina && pagina.addHero) {
+            //Puercaso, ver para cambiar en el futuro
+            await responseInsert.addPages(pagina);
+            await pagina.addHero(responseInsert);
             return responseInsert;
         }
         return null;
@@ -55,6 +66,19 @@ export const insertTextSection = async (section: TextSectionInterface, page: num
         return null;
     } catch (error) {
         console.error('Error al insertar la pagina ', error);
+        return null;
+    }
+};
+
+export const getHeros = async (type: string) => {
+    try {
+        const herosWithPage = await HeroSection.findAll<Model<HeroInstance>>({ include: 'pages' });
+        if (herosWithPage) {
+            return herosWithPage;
+        }
+        return null;
+    } catch (error) {
+        console.error(error);
         return null;
     }
 };
