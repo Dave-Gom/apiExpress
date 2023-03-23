@@ -1,9 +1,9 @@
 import { Model } from 'sequelize-typescript';
-import { HeroInstance, PageInstance } from '../database/Associations';
 import { Page } from '../database/models/Pages';
 import { HeroSection } from '../database/models/Sectionables/HeroSection';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
+import { HeroInstance, PageInstance } from '../interfaces/Instances.interface';
 import {
     HeroSection as HeroSectionInterface,
     OfertaSection as OfertaSectionInterface,
