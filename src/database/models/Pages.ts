@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+
+import { DataType, Model } from 'sequelize-typescript';
 import { PageInteface } from '../../interfaces/Pages.interface';
 import { sequelize } from '../database';
 import { User } from './user';
@@ -8,20 +8,20 @@ const Page = sequelize.define<Model, PageInteface>(
     'pages',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             defaultValue: '',
         },
         active: {
-            type: DataTypes.BOOLEAN,
+            type: DataType.BOOLEAN,
             defaultValue: false,
         },
         updatedBy: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
@@ -29,7 +29,7 @@ const Page = sequelize.define<Model, PageInteface>(
             allowNull: false,
         },
         author: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
@@ -37,7 +37,7 @@ const Page = sequelize.define<Model, PageInteface>(
             allowNull: false,
         },
         deletedAt: {
-            type: DataTypes.DATE,
+            type: DataType.DATE,
             defaultValue: null,
         },
     },

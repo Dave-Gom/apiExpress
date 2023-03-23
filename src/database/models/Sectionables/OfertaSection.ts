@@ -1,5 +1,4 @@
-import { DataTypes } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { DataType, Model } from 'sequelize-typescript';
 import { OfertaSection } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { User } from '../user';
@@ -8,16 +7,16 @@ const OfertaSection = sequelize.define<Model, OfertaSection>(
     'ofertaSection',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         content: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
         author: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
@@ -25,26 +24,26 @@ const OfertaSection = sequelize.define<Model, OfertaSection>(
             allowNull: false,
         },
         leftImage: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         navegate: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         position: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
         },
         principalImage: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         rigthImage: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         title: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
         updatedBy: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',

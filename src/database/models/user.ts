@@ -1,45 +1,44 @@
-import { DataTypes } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { DataType, Model } from 'sequelize-typescript';
 import { AdminEnum, UserInterface } from '../../interfaces/User.interface';
 import { sequelize } from '../database';
 
 const User = sequelize.define<Model, UserInterface>('users', {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataType.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
     name: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false,
     },
     email: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false,
         unique: true,
     },
     password: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false,
     },
     birthDate: {
-        type: DataTypes.DATE,
+        type: DataType.DATE,
         allowNull: false,
     },
     ciudad: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
     },
     direccion: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
     },
     nacionalidad: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
     },
     ocupacion: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
     },
     role: {
-        type: DataTypes.ENUM(AdminEnum.SU, AdminEnum.ADMIN),
+        type: DataType.ENUM(AdminEnum.SU, AdminEnum.ADMIN),
         allowNull: false,
         defaultValue: AdminEnum.ADMIN,
     },

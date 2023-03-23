@@ -1,5 +1,4 @@
-import { DataTypes } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { DataType, Model } from 'sequelize-typescript';
 import { TextSection } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { User } from '../user';
@@ -8,16 +7,16 @@ const TextSection = sequelize.define<Model, TextSection>(
     'textSections',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         content: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
         author: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
@@ -25,10 +24,10 @@ const TextSection = sequelize.define<Model, TextSection>(
             allowNull: false,
         },
         position: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
         },
         updatedBy: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',

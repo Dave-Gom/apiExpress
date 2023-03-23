@@ -1,5 +1,4 @@
-import { DataTypes } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { DataType, Model } from 'sequelize-typescript';
 import { CategoriaInterface } from '../../interfaces/Categoria.interface';
 import { sequelize } from '../database';
 import { User } from './user';
@@ -8,34 +7,34 @@ const Categoria = sequelize.define<Model, CategoriaInterface>(
     'categorias',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         active: {
-            type: DataTypes.BOOLEAN,
+            type: DataType.BOOLEAN,
             defaultValue: false,
         },
         author: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
             },
         },
         nombre: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
         updatedBy: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
             },
         },
         deletedAt: {
-            type: DataTypes.DATE,
+            type: DataType.DATE,
             defaultValue: null,
         },
     },

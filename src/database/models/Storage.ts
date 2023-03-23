@@ -1,5 +1,4 @@
-import { DataTypes } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { DataType, Model } from 'sequelize-typescript';
 import { StorageInterface } from '../../interfaces/Storage.interface';
 import { sequelize } from '../database';
 
@@ -7,13 +6,13 @@ export const Storage = sequelize.define<Model, StorageInterface>(
     'storage',
     {
         fileName: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         idUser: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         path: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
     },
     {

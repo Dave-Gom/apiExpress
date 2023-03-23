@@ -1,5 +1,4 @@
-import { DataTypes } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { DataType, Model } from 'sequelize-typescript';
 import { PostInterface } from '../../interfaces/Post.interface';
 import { sequelize } from '../database';
 import { Categoria } from './Categorias';
@@ -9,28 +8,28 @@ const Post = sequelize.define<Model, PostInterface>(
     'posts',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         author: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             allowNull: false,
             references: {
                 model: User,
                 key: 'id',
             },
         },
-        title: { type: DataTypes.STRING },
+        title: { type: DataType.STRING },
         content: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
         image: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         updatedBy: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             allowNull: false,
             references: {
                 model: User,
@@ -38,11 +37,11 @@ const Post = sequelize.define<Model, PostInterface>(
             },
         },
         deletedAt: {
-            type: DataTypes.DATE,
+            type: DataType.DATE,
             allowNull: true,
         },
         brief: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
     },
