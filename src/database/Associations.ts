@@ -3,6 +3,8 @@ import { HeroSection } from './models/Sectionables/HeroSection';
 import { User } from './models/user';
 
 // uno a muchos
+
+//relaciones user a page
 User.hasMany(Page, {
     foreignKey: 'author',
     as: 'pages',
@@ -18,6 +20,24 @@ Page.belongsTo(User, {
 });
 Page.belongsTo(User, {
     as: 'updatedByDetails',
+    foreignKey: 'updatedBy',
+});
+
+//relaciones user a hero
+User.hasMany(HeroSection, {
+    foreignKey: 'author',
+});
+
+User.hasMany(HeroSection, {
+    foreignKey: 'updatedBy',
+});
+
+HeroSection.belongsTo(User, {
+    foreignKey: 'author',
+    constraints: false,
+});
+
+HeroSection.belongsTo(User, {
     foreignKey: 'updatedBy',
 });
 

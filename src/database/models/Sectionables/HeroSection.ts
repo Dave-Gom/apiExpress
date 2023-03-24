@@ -1,7 +1,6 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { HeroSection } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
-import { Page } from '../Pages';
 import { User } from '../user';
 
 const HeroSection = sequelize.define<Model, HeroSection>(
@@ -53,16 +52,5 @@ const HeroSection = sequelize.define<Model, HeroSection>(
         timestamps: true,
     }
 );
-
-HeroSection.belongsTo(User, {
-    as: 'User',
-    foreignKey: 'author',
-    constraints: false,
-});
-
-HeroSection.belongsToMany(Page, {
-    as: 'Page',
-    through: 'heroSectionPages',
-});
 
 export { HeroSection };
