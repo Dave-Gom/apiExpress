@@ -4,7 +4,7 @@ import { checkJWT } from '../middlewares/Session';
 
 const router = Router();
 
-router.post('/', checkJWT, createPost);
+router.post('/:idCategoria?', checkJWT, createPost);
 router.get('/', checkJWT, readPosts);
 router.get('/:id', checkJWT, readPost);
 router.put('/:id', checkJWT, updatePost);

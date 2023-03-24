@@ -1,5 +1,7 @@
 import { Model } from 'sequelize-typescript';
+import { CategoriaInterface } from './Categoria.interface';
 import { PageInteface } from './Pages.interface';
+import { PostInterface } from './Post.interface';
 import { HeroSection, OfertaSectionInterface, TextSectionInterface } from './Section.interface';
 
 export interface PageInstance extends Model<PageInteface> {
@@ -17,4 +19,14 @@ export interface OfertaInstance extends Model<OfertaSectionInterface> {
 
 export interface TextSectionInstance extends Model<TextSectionInterface> {
     addPages?: (obj: PageInstance) => Promise<TextSectionInstance>;
+}
+
+// categorias y posts
+
+export interface CategoriaInstance extends Model<CategoriaInterface> {
+    addPost?: (obj: PostInstance) => Promise<CategoriaInstance>;
+}
+
+export interface PostInstance extends Model<PostInterface> {
+    addCategoria?: (obj: CategoriaInstance) => Promise<PostInstance>;
 }

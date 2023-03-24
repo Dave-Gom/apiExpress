@@ -1,11 +1,25 @@
 import { Model } from 'sequelize-typescript';
+import { Categoria } from '../database/models/Categorias';
 import { Post } from '../database/models/Post';
+import { CategoriaInstance, PostInstance } from '../interfaces/Instances.interface';
 import { PostInterface } from '../interfaces/Post.interface';
 
-export const insertPost = async (data: PostInterface, user: number) => {
+export const insertPost = async (data: PostInterface, user: number, categoriaId?: number) => {
     try {
-        const responseInsert = await Post.create<Model<PostInterface>>({ ...data, author: user, updatedBy: user });
-        if (responseInsert) return responseInsert;
+        const responseInsert = await Post.create<PostInstance>(
+            { ...data, author: user, updatedBy: user },
+            { include: [Categoria] }
+        );
+        if (responseInsert) {
+            if (categoriaId) {
+                const categoria = await Categoria.findByPk<CategoriaInstance>(categoriaId, { include: [Post] });
+                if (categoria && categoria.addPost && responseInsert && responseInsert.addCategoria) {
+                    await categoria.addPost(responseInsert);
+                    await responseInsert.addCategoria(categoria);
+                }
+            }
+            return responseInsert;
+        }
         return null;
     } catch (error) {
         console.error('Error al crear la publicacion ', error);
@@ -15,7 +29,7 @@ export const insertPost = async (data: PostInterface, user: number) => {
 
 export const getPosts = async () => {
     try {
-        const posts = await Post.findAll<Model<PostInterface>>({ where: { deletedAt: null } });
+        const posts = await Post.findAll<PostInstance>({ where: { deletedAt: null } });
         if (posts) return posts;
         return null;
     } catch (error) {

@@ -1,6 +1,8 @@
 import { Model } from 'sequelize-typescript';
 import { Categoria } from '../database/models/Categorias';
+import { Post } from '../database/models/Post';
 import { CategoriaInterface } from '../interfaces/Categoria.interface';
+import { CategoriaInstance } from '../interfaces/Instances.interface';
 
 export const postCategoria = async (data: CategoriaInterface, user: number) => {
     try {
@@ -18,8 +20,13 @@ export const postCategoria = async (data: CategoriaInterface, user: number) => {
 
 export const getCategorias = async () => {
     try {
-        const responseInsert = await Categoria.findAll<Model<CategoriaInterface>>({ where: { deletedAt: null } });
-        if (responseInsert) return responseInsert;
+        const responseInsert = await Categoria.findAll<CategoriaInstance>({
+            where: { deletedAt: null },
+            include: [Post],
+        });
+        if (responseInsert) {
+            return responseInsert;
+        }
         return null;
     } catch (error) {
         return null;

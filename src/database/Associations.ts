@@ -140,3 +140,12 @@ Page.belongsToMany(TextSection, {
 TextSection.belongsToMany(Page, {
     through: 'pageTexts',
 });
+
+//categorias y posts
+Categoria.belongsToMany(Post, {
+    through: 'postCategorias',
+});
+
+Post.belongsToMany(Categoria, {
+    through: 'postCategorias',
+});
