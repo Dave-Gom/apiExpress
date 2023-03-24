@@ -1,9 +1,9 @@
 import { DataType, Model } from 'sequelize-typescript';
-import { OfertaSection } from '../../../interfaces/Section.interface';
+import { OfertaSectionInterface } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { User } from '../user';
 
-const OfertaSection = sequelize.define<Model, OfertaSection>(
+const OfertaSection = sequelize.define<Model, OfertaSectionInterface>(
     'ofertaSection',
     {
         id: {
@@ -21,7 +21,6 @@ const OfertaSection = sequelize.define<Model, OfertaSection>(
                 model: User,
                 key: 'id',
             },
-            allowNull: false,
         },
         leftImage: {
             type: DataType.STRING,

@@ -42,7 +42,7 @@ export interface OfertaSections {
     ofertaSectionId: number;
 }
 
-export interface OfertaSection {
+export interface OfertaSectionInterface {
     id: number;
     title: string;
     content?: string;

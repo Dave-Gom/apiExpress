@@ -1,5 +1,6 @@
 import { Page } from './models/Pages';
 import { HeroSection } from './models/Sectionables/HeroSection';
+import { OfertaSection } from './models/Sectionables/OfertaSection';
 import { User } from './models/user';
 
 // uno a muchos
@@ -41,6 +42,24 @@ HeroSection.belongsTo(User, {
     foreignKey: 'updatedBy',
 });
 
+//OfertaSection y users
+
+User.hasMany(OfertaSection, {
+    foreignKey: 'author',
+});
+
+OfertaSection.belongsTo(User, {
+    foreignKey: 'author',
+});
+
+User.hasMany(OfertaSection, {
+    foreignKey: 'updatedBy',
+});
+
+OfertaSection.belongsTo(User, {
+    foreignKey: 'updatedBy',
+});
+
 //many to many
 Page.belongsToMany(HeroSection, {
     through: 'pageHero',
@@ -50,4 +69,12 @@ Page.belongsToMany(HeroSection, {
 HeroSection.belongsToMany(Page, {
     through: 'pageHero',
     as: 'pages',
+});
+
+Page.belongsToMany(OfertaSection, {
+    through: 'PageOferta',
+});
+
+OfertaSection.belongsToMany(Page, {
+    through: 'PageOferta',
 });

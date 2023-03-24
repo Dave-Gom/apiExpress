@@ -5,7 +5,13 @@ import { User } from '../database/models/user';
 import { PageInteface } from '../interfaces/Pages.interface';
 import { SectionTypesEnum } from '../interfaces/Section.interface';
 import { UserInterface } from '../interfaces/User.interface';
-import { getHeros, insertHeroSection, insertOfertaSection, insertTextSection } from '../services/Section.services';
+import {
+    getHeros,
+    getOfertas,
+    insertHeroSection,
+    insertOfertaSection,
+    insertTextSection,
+} from '../services/Section.services';
 import { handleHttp } from '../utils/error.handler';
 
 export const createSection = async ({ body, params }: Request, res: Response) => {
@@ -69,6 +75,10 @@ export const readSection = async ({ body, params }: Request, res: Response) => {
         case SectionTypesEnum.HERO:
             const hero = await getHeros(params.type);
             res.send(hero);
+            break;
+        case SectionTypesEnum.OFERTA:
+            const oferta = await getOfertas(params.type);
+            res.send(oferta);
             break;
     }
 };

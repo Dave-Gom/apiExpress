@@ -3,10 +3,11 @@ import { Page } from '../database/models/Pages';
 import { HeroSection } from '../database/models/Sectionables/HeroSection';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
-import { HeroInstance, PageInstance } from '../interfaces/Instances.interface';
+import { User } from '../database/models/user';
+import { HeroInstance, OfertaInstance, PageInstance } from '../interfaces/Instances.interface';
 import {
     HeroSection as HeroSectionInterface,
-    OfertaSection as OfertaSectionInterface,
+    OfertaSectionInterface,
     TextSection as TextSectionInterface,
 } from '../interfaces/Section.interface';
 
@@ -38,12 +39,20 @@ export const insertHeroSection = async (section: HeroSectionInterface, page: num
 
 export const insertOfertaSection = async (section: OfertaSectionInterface, page: number, user: number) => {
     try {
-        const responseInsert = await OfertaSection.create<Model<OfertaSectionInterface>>({
-            ...section,
-            author: user,
-            updatedBy: user,
-        });
-        if (responseInsert) {
+        console.log(user);
+        const pagina = await Page.findByPk<PageInstance>(page, { include: OfertaSection });
+        const responseInsert = await OfertaSection.create<OfertaInstance>(
+            {
+                ...section,
+                author: user,
+                updatedBy: user,
+            },
+            { include: Page }
+        );
+
+        if (responseInsert && responseInsert.addPages && pagina && pagina.addOfertaSection) {
+            await responseInsert.addPages(pagina);
+            await pagina.addOfertaSection(responseInsert);
             return responseInsert;
         }
         return null;
@@ -72,9 +81,22 @@ export const insertTextSection = async (section: TextSectionInterface, page: num
 
 export const getHeros = async (type: string) => {
     try {
-        const herosWithPage = await HeroSection.findAll<Model<HeroInstance>>({ include: 'pages' });
+        const herosWithPage = await HeroSection.findAll<Model<HeroInstance>>({ include: ['pages', User] });
         if (herosWithPage) {
             return herosWithPage;
+        }
+        return null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+export const getOfertas = async (type: string) => {
+    try {
+        const ofertasWithPage = await OfertaSection.findAll<Model<OfertaInstance>>({ include: [Page, User] });
+        if (ofertasWithPage) {
+            return ofertasWithPage;
         }
         return null;
     } catch (error) {
