@@ -43,9 +43,4 @@ const Categoria = sequelize.define<Model, CategoriaInterface>(
     }
 );
 
-Categoria.belongsTo(User, {
-    as: 'User',
-    foreignKey: 'author',
-});
-
 export { Categoria };

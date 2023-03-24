@@ -1,3 +1,4 @@
+import { Categoria } from './models/Categorias';
 import { Page } from './models/Pages';
 import { Post } from './models/Post';
 import { HeroSection } from './models/Sectionables/HeroSection';
@@ -93,6 +94,23 @@ User.hasMany(Post, {
 });
 
 User.hasMany(Post, {
+    foreignKey: 'updatedBy',
+});
+
+//categorias y users
+Categoria.belongsTo(User, {
+    foreignKey: 'author',
+});
+
+Categoria.belongsTo(User, {
+    foreignKey: 'updatedBy',
+});
+
+User.hasMany(Categoria, {
+    foreignKey: 'author',
+});
+
+User.hasMany(Categoria, {
     foreignKey: 'updatedBy',
 });
 
