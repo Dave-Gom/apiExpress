@@ -5,13 +5,9 @@
 //     position: number;
 // }
 
-export interface TextSections {
-    id?: number;
-    pageId: number;
-    textSectionId: number;
-}
 
-export interface TextSection {
+
+export interface TextSectionInterface {
     id: number;
     content: string;
     author: number;

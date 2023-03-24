@@ -1,5 +1,7 @@
 import { Model } from 'sequelize-typescript';
 import { Page } from '../database/models/Pages';
+import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
+import { TextSection } from '../database/models/Sectionables/TextSection';
 import { PageInteface } from '../interfaces/Pages.interface';
 
 export const insertPage = async (page: PageInteface, user: number) => {
@@ -15,7 +17,10 @@ export const insertPage = async (page: PageInteface, user: number) => {
 
 export const getPagesService = async () => {
     try {
-        const responseInsert = await Page.findAll({ where: { deletedAt: null }, include: ['authorDetails', 'hero'] });
+        const responseInsert = await Page.findAll({
+            where: { deletedAt: null },
+            include: ['authorDetails', 'hero', TextSection, OfertaSection],
+        });
         if (responseInsert) return responseInsert;
         return null;
     } catch (error) {

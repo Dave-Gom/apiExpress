@@ -4,11 +4,11 @@ import { HeroSection } from '../database/models/Sectionables/HeroSection';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
 import { User } from '../database/models/user';
-import { HeroInstance, OfertaInstance, PageInstance } from '../interfaces/Instances.interface';
+import { HeroInstance, OfertaInstance, PageInstance, TextSectionInstance } from '../interfaces/Instances.interface';
 import {
     HeroSection as HeroSectionInterface,
     OfertaSectionInterface,
-    TextSection as TextSectionInterface,
+    TextSectionInterface,
 } from '../interfaces/Section.interface';
 
 export const insertHeroSection = async (section: HeroSectionInterface, page: number, user: number) => {
@@ -64,12 +64,18 @@ export const insertOfertaSection = async (section: OfertaSectionInterface, page:
 
 export const insertTextSection = async (section: TextSectionInterface, page: number, user: number) => {
     try {
-        const responseInsert = await TextSection.create<Model<TextSectionInterface>>({
-            ...section,
-            author: user,
-            updatedBy: user,
-        });
-        if (responseInsert) {
+        const responseInsert = await TextSection.create<TextSectionInstance>(
+            {
+                ...section,
+                author: user,
+                updatedBy: user,
+            },
+            { include: Page }
+        );
+        const pagina = await Page.findByPk<PageInstance>(page, { include: TextSection });
+        if (responseInsert && responseInsert.addPages && pagina && pagina.addTextSection) {
+            await pagina.addTextSection(responseInsert);
+            await responseInsert.addPages(pagina);
             return responseInsert;
         }
         return null;

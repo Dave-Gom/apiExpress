@@ -1,9 +1,9 @@
 import { DataType, Model } from 'sequelize-typescript';
-import { TextSection } from '../../../interfaces/Section.interface';
+import { TextSectionInterface } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { User } from '../user';
 
-const TextSection = sequelize.define<Model, TextSection>(
+const TextSection = sequelize.define<Model, TextSectionInterface>(
     'textSections',
     {
         id: {
