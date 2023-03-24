@@ -1,4 +1,5 @@
 import { Page } from './models/Pages';
+import { Post } from './models/Post';
 import { HeroSection } from './models/Sectionables/HeroSection';
 import { OfertaSection } from './models/Sectionables/OfertaSection';
 import { TextSection } from './models/Sectionables/TextSection';
@@ -75,6 +76,23 @@ User.hasMany(TextSection, {
     foreignKey: 'updatedBy',
 });
 TextSection.belongsTo(User, {
+    foreignKey: 'updatedBy',
+});
+
+//posts y users
+Post.belongsTo(User, {
+    foreignKey: 'author',
+});
+
+Post.belongsTo(User, {
+    foreignKey: 'updatedBy',
+});
+
+User.hasMany(Post, {
+    foreignKey: 'author',
+});
+
+User.hasMany(Post, {
     foreignKey: 'updatedBy',
 });
 

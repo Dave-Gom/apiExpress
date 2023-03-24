@@ -1,7 +1,6 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { PostInterface } from '../../interfaces/Post.interface';
 import { sequelize } from '../database';
-import { Categoria } from './Categorias';
 import { User } from './user';
 
 const Post = sequelize.define<Model, PostInterface>(
@@ -49,15 +48,5 @@ const Post = sequelize.define<Model, PostInterface>(
         timestamps: true,
     }
 );
-
-Post.belongsTo(User, {
-    as: 'User',
-    foreignKey: 'author',
-});
-
-Post.belongsToMany(Categoria, {
-    as: 'categorias',
-    through: 'postCategorias',
-});
 
 export { Post };
