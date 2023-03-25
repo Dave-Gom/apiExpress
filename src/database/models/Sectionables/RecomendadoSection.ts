@@ -43,4 +43,4 @@ const SectionRecomendado = sequelize.define<Model, SectionRecomendadoInterface>(
     }
 );
 
-export { SectionRecomendado as PostRecomendado };
+export { SectionRecomendado };

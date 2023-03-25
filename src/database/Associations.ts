@@ -4,7 +4,7 @@ import { Post } from './models/Post';
 import { HeroSection } from './models/Sectionables/HeroSection';
 import { ListSection } from './models/Sectionables/List.section';
 import { OfertaSection } from './models/Sectionables/OfertaSection';
-import { PostRecomendado } from './models/Sectionables/PostRecomendado';
+import { SectionRecomendado } from './models/Sectionables/RecomendadoSection';
 import { TextSection } from './models/Sectionables/TextSection';
 import { User } from './models/user';
 
@@ -133,19 +133,19 @@ ListSection.hasMany(ListSection, {
 });
 
 //Recomendado section y user
-PostRecomendado.belongsTo(User, {
+SectionRecomendado.belongsTo(User, {
     foreignKey: 'author',
 });
 
-PostRecomendado.belongsTo(User, {
+SectionRecomendado.belongsTo(User, {
     foreignKey: 'author',
 });
 
-User.hasMany(PostRecomendado, {
+User.hasMany(SectionRecomendado, {
     foreignKey: 'author',
 });
 
-User.hasMany(PostRecomendado, {
+User.hasMany(SectionRecomendado, {
     foreignKey: 'author',
 });
 
@@ -206,10 +206,10 @@ Post.belongsToMany(Categoria, {
 });
 
 //Recomendados y paginas
-PostRecomendado.belongsToMany(Page, {
+SectionRecomendado.belongsToMany(Page, {
     through: 'recomendadosPages',
 });
 
-Page.belongsToMany(PostRecomendado, {
+Page.belongsToMany(SectionRecomendado, {
     through: 'recomendadosPages',
 });

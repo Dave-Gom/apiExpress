@@ -4,7 +4,7 @@ import { Post } from '../database/models/Post';
 import { HeroSection } from '../database/models/Sectionables/HeroSection';
 import { ListSection } from '../database/models/Sectionables/List.section';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
-import { PostRecomendado } from '../database/models/Sectionables/PostRecomendado';
+import { SectionRecomendado } from '../database/models/Sectionables/RecomendadoSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
 import { User } from '../database/models/user';
 import {
@@ -123,7 +123,7 @@ export const insertRecomendadoSection = async (
     user: number
 ) => {
     try {
-        const responseInsert = await PostRecomendado.create<SectionRecomendadoInstance>(
+        const responseInsert = await SectionRecomendado.create<SectionRecomendadoInstance>(
             {
                 ...secction,
                 author: user,

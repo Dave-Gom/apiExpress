@@ -2,6 +2,7 @@ import { Model } from 'sequelize-typescript';
 import { Page } from '../database/models/Pages';
 import { ListSection } from '../database/models/Sectionables/List.section';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
+import { SectionRecomendado } from '../database/models/Sectionables/RecomendadoSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
 import { PageInteface } from '../interfaces/Pages.interface';
 
@@ -29,6 +30,7 @@ export const getPagesService = async () => {
                     model: ListSection,
                     attributes: { include: ['title', 'description', 'limit', 'author'] },
                 },
+                SectionRecomendado,
             ],
         });
         if (responseInsert) return responseInsert;
