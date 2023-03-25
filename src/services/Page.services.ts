@@ -1,5 +1,6 @@
 import { Model } from 'sequelize-typescript';
 import { Page } from '../database/models/Pages';
+import { ListSection } from '../database/models/Sectionables/List.section';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
 import { PageInteface } from '../interfaces/Pages.interface';
@@ -19,7 +20,16 @@ export const getPagesService = async () => {
     try {
         const responseInsert = await Page.findAll({
             where: { deletedAt: null },
-            include: ['authorDetails', 'hero', TextSection, OfertaSection],
+            include: [
+                'authorDetails',
+                'hero',
+                TextSection,
+                OfertaSection,
+                {
+                    model: ListSection,
+                    attributes: { include: ['title', 'description', 'limit', 'author'] },
+                },
+            ],
         });
         if (responseInsert) return responseInsert;
         return null;

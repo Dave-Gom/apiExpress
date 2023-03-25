@@ -2,6 +2,7 @@ import { Categoria } from './models/Categorias';
 import { Page } from './models/Pages';
 import { Post } from './models/Post';
 import { HeroSection } from './models/Sectionables/HeroSection';
+import { ListSection } from './models/Sectionables/List.section';
 import { OfertaSection } from './models/Sectionables/OfertaSection';
 import { TextSection } from './models/Sectionables/TextSection';
 import { User } from './models/user';
@@ -114,6 +115,22 @@ User.hasMany(Categoria, {
     foreignKey: 'updatedBy',
 });
 
+// List Section con user
+User.hasMany(ListSection, {
+    foreignKey: 'author',
+});
+ListSection.belongsTo(User, {
+    foreignKey: 'author',
+});
+
+User.hasMany(ListSection, {
+    foreignKey: 'updatedBy',
+});
+
+ListSection.hasMany(ListSection, {
+    foreignKey: 'updatedBy',
+});
+
 //many to many
 Page.belongsToMany(HeroSection, {
     through: 'pageHero',
@@ -139,6 +156,26 @@ Page.belongsToMany(TextSection, {
 
 TextSection.belongsToMany(Page, {
     through: 'pageTexts',
+});
+
+// List Sections y pages
+
+Page.belongsToMany(ListSection, {
+    through: 'PageLists',
+});
+
+ListSection.belongsToMany(Page, {
+    through: 'PageLists',
+});
+
+// Listsections y Posts
+
+ListSection.belongsToMany(Post, {
+    through: 'listPost',
+});
+
+Post.belongsToMany(ListSection, {
+    through: 'listPost',
 });
 
 //categorias y posts

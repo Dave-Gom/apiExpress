@@ -1,12 +1,3 @@
-// export interface Sections {
-//     id: number;
-//     pageId: number;
-//     sectionType: string;
-//     position: number;
-// }
-
-
-
 export interface TextSectionInterface {
     id: number;
     content: string;
@@ -48,6 +39,16 @@ export interface OfertaSectionInterface {
     position: number;
     author: number;
     navegate: string;
+    updatedBy: number;
+}
+
+export interface ListInterface {
+    id: number;
+    title: string;
+    description?: string;
+    limit?: number;
+    author: number;
+    position: number;
     updatedBy: number;
 }
 

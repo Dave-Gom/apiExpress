@@ -2,30 +2,34 @@ import { Request, Response } from 'express';
 import { Model } from 'sequelize-typescript';
 import { Page } from '../database/models/Pages';
 import { User } from '../database/models/user';
-import { PageInteface } from '../interfaces/Pages.interface';
+import { PageInstance } from '../interfaces/Instances.interface';
 import { SectionTypesEnum } from '../interfaces/Section.interface';
 import { UserInterface } from '../interfaces/User.interface';
 import {
+    addPosts,
     getHeros,
     getOfertas,
+    getPostList,
     insertHeroSection,
+    insertListSection,
     insertOfertaSection,
     insertTextSection,
+    putListOptions,
 } from '../services/Section.services';
 import { handleHttp } from '../utils/error.handler';
 
 export const createSection = async ({ body, params }: Request, res: Response) => {
     try {
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-        const page = await Page.findByPk<Model<PageInteface>>(params.pageId);
-        if (user && page) {
+        const page = await Page.findByPk<PageInstance>(params.pageId);
+        if (user) {
             switch (params.type) {
                 case SectionTypesEnum.HERO:
                     const hero = await insertHeroSection(
                         {
                             ...body,
                         },
-                        page.dataValues.id,
+                        page,
                         user.dataValues.id
                     );
                     res.send(hero);
@@ -35,13 +39,14 @@ export const createSection = async ({ body, params }: Request, res: Response) =>
                         {
                             ...body,
                         },
-                        page.dataValues.id,
+                        page,
                         user.dataValues.id
                     );
                     res.send(oferta);
                     break;
                 case SectionTypesEnum.POSTS:
-                    res.send(SectionTypesEnum.POSTS);
+                    const posts = await insertListSection({ ...body }, page, user.dataValues.id);
+                    res.send(posts);
                     break;
                 case SectionTypesEnum.RECOMENDADO:
                     res.send(SectionTypesEnum.RECOMENDADO);
@@ -51,7 +56,7 @@ export const createSection = async ({ body, params }: Request, res: Response) =>
                         {
                             ...body,
                         },
-                        page.dataValues.id,
+                        page,
                         user.dataValues.id
                     );
                     res.send(textSection);
@@ -80,5 +85,34 @@ export const readSection = async ({ body, params }: Request, res: Response) => {
             const oferta = await getOfertas(params.type);
             res.send(oferta);
             break;
+        case SectionTypesEnum.POSTS:
+            const PostsLists = await getPostList(params.type);
+            res.send(PostsLists);
+            break;
+    }
+};
+
+export const updateSection = async ({ body, params }: Request, res: Response) => {
+    const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
+    if (user) {
+        switch (params.type) {
+            case SectionTypesEnum.POSTS:
+                const Posts = await putListOptions(body, parseInt(params.id, 10), user?.dataValues.id);
+                res.send(Posts);
+                break;
+        }
+    }
+};
+
+export const addListPosts = async ({ body, params }: Request, res: Response) => {
+    try {
+        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
+        if (user) {
+            const Posts = await addPosts(body.posts, parseInt(params.id, 10), user.dataValues.id);
+            res.send(Posts);
+        }
+        throw 'No user';
+    } catch (e) {
+        handleHttp(res, `ERROR_ADD_POSTS_TOLIST_SECTION: ${e}`);
     }
 };
