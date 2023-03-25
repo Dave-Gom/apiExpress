@@ -43,6 +43,10 @@ const Post = sequelize.define<Model, PostInterface>(
             type: DataType.STRING,
             allowNull: false,
         },
+        longDesc: {
+            type: DataType.STRING,
+            allowNull: false,
+        },
     },
     {
         timestamps: true,

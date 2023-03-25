@@ -1,7 +1,7 @@
 import { Model } from 'sequelize-typescript';
 import { CategoriaInterface } from './Categoria.interface';
 import { PageInteface } from './Pages.interface';
-import { PostInterface } from './Post.interface';
+import { PostInterface, SectionRecomendadoInterface } from './Post.interface';
 import { HeroSection, ListInterface, OfertaSectionInterface, TextSectionInterface } from './Section.interface';
 
 export interface PageInstance extends Model<PageInteface> {
@@ -9,6 +9,7 @@ export interface PageInstance extends Model<PageInteface> {
     addOfertaSection?: (obj: OfertaInstance) => Promise<PageInstance>;
     addTextSection?: (obj: TextSectionInstance) => Promise<PageInstance>;
     addListSection?: (obj: ListaInstance) => Promise<PageInstance>;
+    addSectionRecomendado?: (obj: SectionRecomendadoInstance) => Promise<PageInstance>;
 }
 
 export interface HeroInstance extends Model<HeroSection> {
@@ -20,6 +21,10 @@ export interface OfertaInstance extends Model<OfertaSectionInterface> {
 
 export interface TextSectionInstance extends Model<TextSectionInterface> {
     addPages?: (obj: PageInstance) => Promise<TextSectionInstance>;
+}
+
+export interface SectionRecomendadoInstance extends Model<SectionRecomendadoInterface> {
+    addPage?: (obj: PageInstance) => Promise<SectionRecomendadoInstance>;
 }
 
 // categorias y posts

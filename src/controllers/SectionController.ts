@@ -13,6 +13,7 @@ import {
     insertHeroSection,
     insertListSection,
     insertOfertaSection,
+    insertRecomendadoSection,
     insertTextSection,
     putListOptions,
 } from '../services/Section.services';
@@ -49,7 +50,8 @@ export const createSection = async ({ body, params }: Request, res: Response) =>
                     res.send(posts);
                     break;
                 case SectionTypesEnum.RECOMENDADO:
-                    res.send(SectionTypesEnum.RECOMENDADO);
+                    const recomendado = await insertRecomendadoSection({ ...body }, page, user.dataValues.id);
+                    res.send(recomendado);
                     break;
                 case SectionTypesEnum.TEXTO:
                     const textSection = await insertTextSection(

@@ -4,6 +4,7 @@ import { Post } from '../database/models/Post';
 import { HeroSection } from '../database/models/Sectionables/HeroSection';
 import { ListSection } from '../database/models/Sectionables/List.section';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
+import { PostRecomendado } from '../database/models/Sectionables/PostRecomendado';
 import { TextSection } from '../database/models/Sectionables/TextSection';
 import { User } from '../database/models/user';
 import {
@@ -12,8 +13,10 @@ import {
     OfertaInstance,
     PageInstance,
     PostInstance,
+    SectionRecomendadoInstance,
     TextSectionInstance,
 } from '../interfaces/Instances.interface';
+import { SectionRecomendadoInterface } from '../interfaces/Post.interface';
 import {
     HeroSection as HeroSectionInterface,
     ListInterface,
@@ -107,6 +110,43 @@ export const insertListSection = async (secction: ListInterface, page: PageInsta
             await responseInsert.addPage(page);
             return responseInsert;
         }
+        return null;
+    } catch (error) {
+        console.error('Error al insertar la seccion ', error);
+        return null;
+    }
+};
+
+export const insertRecomendadoSection = async (
+    secction: SectionRecomendadoInterface,
+    page: PageInstance | null,
+    user: number
+) => {
+    try {
+        const responseInsert = await PostRecomendado.create<SectionRecomendadoInstance>(
+            {
+                ...secction,
+                author: user,
+                updatedBy: user,
+            },
+            { include: [Page] }
+        );
+        if (!responseInsert) {
+            console.log('!responseInsert');
+        }
+        if (!responseInsert.addPage) {
+            console.log('!responseInsert.addPage');
+        }
+        if (page && !page.addSectionRecomendado) {
+            console.log('!page.addSectionRecomendado');
+        }
+        if (responseInsert && responseInsert.addPage && page && page.addSectionRecomendado) {
+            await page.addSectionRecomendado(responseInsert);
+            await responseInsert.addPage(page);
+            return responseInsert;
+        }
+        console.log('null');
+
         return null;
     } catch (error) {
         console.error('Error al insertar la seccion ', error);
