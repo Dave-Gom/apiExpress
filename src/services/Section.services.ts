@@ -193,6 +193,31 @@ export const getPostList = async (type: string) => {
     }
 };
 
+export const getRecomendados = async () => {
+    try {
+        const recomendadosWithPage = await SectionRecomendado.findAll<SectionRecomendadoInstance>({ include: [Page] });
+        if (recomendadosWithPage) {
+            return recomendadosWithPage;
+        }
+        return null;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const getTextoSections = async () => {
+    try {
+        const textSection = await TextSection.findAll<TextSectionInstance>({ include: [Page] });
+        if (textSection) {
+            return textSection;
+        }
+        return null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
 export const putListOptions = async (secction: ListInterface, listaId: number, user: number) => {
     try {
         const updateResponse = await ListSection.update<ListaInstance>(

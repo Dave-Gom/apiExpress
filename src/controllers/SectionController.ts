@@ -10,6 +10,8 @@ import {
     getHeros,
     getOfertas,
     getPostList,
+    getRecomendados,
+    getTextoSections,
     insertHeroSection,
     insertListSection,
     insertOfertaSection,
@@ -91,6 +93,16 @@ export const readSection = async ({ body, params }: Request, res: Response) => {
             const PostsLists = await getPostList(params.type);
             res.send(PostsLists);
             break;
+        case SectionTypesEnum.RECOMENDADO:
+            const Recomendados = await getRecomendados();
+            res.send(Recomendados);
+            break;
+        case SectionTypesEnum.TEXTO:
+            const textos = await getTextoSections();
+            res.send(textos);
+            break;
+        default:
+            handleHttp(res, `ERROR_READ_SECTION: ${params.type}`);
     }
 };
 
