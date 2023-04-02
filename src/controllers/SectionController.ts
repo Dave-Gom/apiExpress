@@ -17,7 +17,11 @@ import {
     insertOfertaSection,
     insertRecomendadoSection,
     insertTextSection,
+    putHero,
     putListOptions,
+    putOfertaSection,
+    putRecomendadoSection,
+    putTextoSection,
 } from '../services/Section.services';
 import { handleHttp } from '../utils/error.handler';
 
@@ -88,15 +92,15 @@ export const readSection = async ({ body, params }: Request, res: Response) => {
     const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
     switch (params.type) {
         case SectionTypesEnum.HERO:
-            const hero = await getHeros(params.type);
+            const hero = await getHeros();
             res.send(hero);
             break;
         case SectionTypesEnum.OFERTA:
-            const oferta = await getOfertas(params.type);
+            const oferta = await getOfertas();
             res.send(oferta);
             break;
         case SectionTypesEnum.POSTS:
-            const PostsLists = await getPostList(params.type);
+            const PostsLists = await getPostList();
             res.send(PostsLists);
             break;
         case SectionTypesEnum.RECOMENDADO:
@@ -120,6 +124,24 @@ export const updateSection = async ({ body, params }: Request, res: Response) =>
                 const Posts = await putListOptions(body, parseInt(params.id, 10), user?.dataValues.id);
                 res.send(Posts);
                 break;
+            case SectionTypesEnum.HERO:
+                const Heros = await putHero(body, parseInt(params.id, 10), user?.dataValues.id);
+                res.send(Heros);
+                break;
+            case SectionTypesEnum.OFERTA:
+                const ofertas = await putOfertaSection(body, parseInt(params.id, 10), user?.dataValues.id);
+                res.send(ofertas);
+                break;
+            case SectionTypesEnum.RECOMENDADO:
+                const recomendado = await putRecomendadoSection(body, parseInt(params.id, 10), user?.dataValues.id);
+                res.send(recomendado);
+                break;
+            case SectionTypesEnum.TEXTO:
+                const texto = await putTextoSection(body, parseInt(params.id, 10), user?.dataValues.id);
+                res.send(texto);
+                break;
+            default:
+                handleHttp(res, `ERROR_PUT_SECTION: ${params.type}`);
         }
     }
 };

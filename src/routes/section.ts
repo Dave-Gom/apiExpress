@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/:type/:pageId', checkJWT, createSection);
 router.get('/:type', checkJWT, readSection);
-router.post('/:type/:id/', checkJWT, updateSection);
+router.put('/:type/:id/', checkJWT, updateSection);
 router.post('/ADD/POSTS/:id', checkJWT, addListPosts);
 
 export { router };

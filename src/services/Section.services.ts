@@ -157,7 +157,7 @@ export const insertRecomendadoSection = async (
     }
 };
 
-export const getHeros = async (type: string) => {
+export const getHeros = async () => {
     try {
         const herosWithPage = await HeroSection.findAll<Model<HeroInstance>>({ include: ['pages', User] });
         if (herosWithPage) {
@@ -170,7 +170,7 @@ export const getHeros = async (type: string) => {
     }
 };
 
-export const getOfertas = async (type: string) => {
+export const getOfertas = async () => {
     try {
         const ofertasWithPage = await OfertaSection.findAll<Model<OfertaInstance>>({ include: [Page, User] });
         if (ofertasWithPage) {
@@ -183,7 +183,7 @@ export const getOfertas = async (type: string) => {
     }
 };
 
-export const getPostList = async (type: string) => {
+export const getPostList = async () => {
     try {
         const ofertasWithPage = await ListSection.findAll<ListaInstance>({ include: [Post] });
         if (ofertasWithPage) {
@@ -232,6 +232,75 @@ export const putListOptions = async (secction: ListInterface, listaId: number, u
         if (updateResponse) {
             return updateResponse;
         }
+        return null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+export const putHero = async (newData: HeroSectionInterface, heroId: number, user: number) => {
+    try {
+        const updateResponse = await HeroSection.update<HeroInstance>(
+            { ...newData, updatedBy: user },
+            { where: { id: heroId } }
+        );
+        if (updateResponse) {
+            return updateResponse;
+        }
+        return null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+export const putOfertaSection = async (newData: OfertaSectionInterface, ofertaId: number, user: number) => {
+    try {
+        const updateResponse = await OfertaSection.update<OfertaInstance>(
+            { ...newData, updatedBy: user },
+            { where: { id: ofertaId } }
+        );
+        if (updateResponse) {
+            return updateResponse;
+        }
+        return null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+export const putTextoSection = async (newData: TextSectionInterface, textoId: number, user: number) => {
+    try {
+        const updateResponse = await TextSection.update<TextSectionInstance>(
+            { ...newData, updatedBy: user },
+            { where: { id: textoId } }
+        );
+        if (updateResponse) {
+            return updateResponse;
+        }
+        return null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+export const putRecomendadoSection = async (
+    newData: SectionRecomendadoInterface,
+    recomendadoId: number,
+    user: number
+) => {
+    try {
+        const updateResponse = await SectionRecomendado.update<SectionRecomendadoInstance>(
+            { ...newData, updatedBy: user },
+            { where: { id: recomendadoId } }
+        );
+        if (updateResponse) {
+            return updateResponse;
+        }
+        return null;
     } catch (error) {
         console.error(error);
         return null;
