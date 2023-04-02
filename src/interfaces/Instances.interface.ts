@@ -25,6 +25,7 @@ export interface TextSectionInstance extends Model<TextSectionInterface> {
 
 export interface SectionRecomendadoInstance extends Model<SectionRecomendadoInterface> {
     addPage?: (obj: PageInstance) => Promise<SectionRecomendadoInstance>;
+    addPost?: (obj: PostInstance) => Promise<SectionRecomendadoInstance>;
 }
 
 // categorias y posts
@@ -36,6 +37,7 @@ export interface CategoriaInstance extends Model<CategoriaInterface> {
 export interface PostInstance extends Model<PostInterface> {
     addCategoria?: (obj: CategoriaInstance) => Promise<PostInstance>;
     addListSection?: (obj: ListaInstance) => Promise<PostInstance>;
+    addSectionRecomendado?: (obj: SectionRecomendadoInstance) => Promise<PostInstance>;
 }
 
 export interface ListaInstance extends Model<ListInterface> {

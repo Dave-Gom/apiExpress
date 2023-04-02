@@ -120,7 +120,8 @@ export const insertListSection = async (secction: ListInterface, page: PageInsta
 export const insertRecomendadoSection = async (
     secction: SectionRecomendadoInterface,
     page: PageInstance | null,
-    user: number
+    user: number,
+    postId: number
 ) => {
     try {
         const responseInsert = await SectionRecomendado.create<SectionRecomendadoInstance>(
@@ -129,23 +130,25 @@ export const insertRecomendadoSection = async (
                 author: user,
                 updatedBy: user,
             },
-            { include: [Page] }
+            { include: [Page, Post] }
         );
-        if (!responseInsert) {
-            console.log('!responseInsert');
-        }
-        if (!responseInsert.addPage) {
-            console.log('!responseInsert.addPage');
-        }
-        if (page && !page.addSectionRecomendado) {
-            console.log('!page.addSectionRecomendado');
-        }
-        if (responseInsert && responseInsert.addPage && page && page.addSectionRecomendado) {
-            await page.addSectionRecomendado(responseInsert);
-            await responseInsert.addPage(page);
+
+        if (responseInsert) {
+            if (responseInsert.addPage && page && page.addSectionRecomendado) {
+                await page.addSectionRecomendado(responseInsert);
+                await responseInsert.addPage(page);
+            }
+            if (responseInsert.addPost) {
+                const post = await Post.findByPk<PostInstance>(postId, {
+                    include: [SectionRecomendado],
+                });
+                if (post && post.addSectionRecomendado) {
+                    await post.addSectionRecomendado(responseInsert);
+                    await responseInsert.addPost(post);
+                }
+            }
             return responseInsert;
         }
-        console.log('null');
 
         return null;
     } catch (error) {
@@ -195,7 +198,9 @@ export const getPostList = async (type: string) => {
 
 export const getRecomendados = async () => {
     try {
-        const recomendadosWithPage = await SectionRecomendado.findAll<SectionRecomendadoInstance>({ include: [Page] });
+        const recomendadosWithPage = await SectionRecomendado.findAll<SectionRecomendadoInstance>({
+            include: [Page, Post],
+        });
         if (recomendadosWithPage) {
             return recomendadosWithPage;
         }

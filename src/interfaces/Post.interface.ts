@@ -12,7 +12,6 @@ export interface PostInterface {
 
 export interface SectionRecomendadoInterface {
     id: number;
-    postId: number;
     position: number;
     updatedBy: number;
     author: number;

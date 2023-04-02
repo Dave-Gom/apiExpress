@@ -213,3 +213,7 @@ SectionRecomendado.belongsToMany(Page, {
 Page.belongsToMany(SectionRecomendado, {
     through: 'recomendadosPages',
 });
+
+SectionRecomendado.belongsToMany(Post, { through: 'postRecomendados' });
+
+Post.belongsToMany(SectionRecomendado, { through: 'postRecomendados' });
