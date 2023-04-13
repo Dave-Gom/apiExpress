@@ -325,3 +325,79 @@ export const addPosts = async (posts: number[], listId: number, user: number) =>
         return null;
     }
 };
+
+export const removeHero = async (id: number, user: number) => {
+    try {
+        const hero = await HeroSection.findByPk<HeroInstance>(id);
+        if (hero) {
+            await hero.update({ updatedBy: user });
+            await hero.destroy();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log('error: ', error);
+
+        return false;
+    }
+};
+
+export const removeOferta = async (id: number, user: number) => {
+    try {
+        const oferta = await OfertaSection.findByPk<OfertaInstance>(id);
+        if (oferta) {
+            await oferta.update({ updatedBy: user });
+            await oferta.destroy();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log('error: ', error);
+        return false;
+    }
+};
+
+export const removeListPost = async (id: number, user: number) => {
+    try {
+        const oferta = await ListSection.findByPk<ListaInstance>(id);
+        if (oferta) {
+            await oferta.update({ updatedBy: user });
+            await oferta.destroy();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log('error: ', error);
+        return false;
+    }
+};
+
+export const removeRecomendadoSection = async (id: number, user: number) => {
+    try {
+        const oferta = await SectionRecomendado.findByPk<SectionRecomendadoInstance>(id);
+        if (oferta) {
+            await oferta.update({ updatedBy: user });
+            await oferta.destroy();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log('error: ', error);
+        return false;
+    }
+};
+
+export const removeTextSection = async (id: number, user: number) => {
+    try {
+        const text = await TextSection.findByPk<TextSectionInstance>(id);
+        if (text) {
+            await text.update({ updatedBy: user });
+            await text.destroy();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log('error: ', error);
+        return false;
+    }
+};
