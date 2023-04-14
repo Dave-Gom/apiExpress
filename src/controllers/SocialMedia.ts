@@ -46,7 +46,9 @@ export const removeSocialMedia = async ({ body, params }: Request, res: Response
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
         if (user) {
             const responseItem = await deleteSocialMedia(parseInt(params.id, 10), user.dataValues.id);
-            res.send(responseItem);
+            if (responseItem) {
+                res.send({ status: 'Eliminado correctamente' });
+            } else throw new Error('NO se pudo eliminar');
         } else throw new Error(`Usuario no existe ${body.user}`);
     } catch (e) {
         handleHttp(res, `ERROR_SMEDIA_POST: ${e}`);

@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', checkJWT, createSocialMedia);
 router.get('/', checkJWT, readSocialMedia);
-router.put('/', checkJWT, updateSocialMedia);
-router.delete('/', checkJWT, removeSocialMedia);
+router.put('/:id', checkJWT, updateSocialMedia);
+router.delete('/:id', checkJWT, removeSocialMedia);
 
 export { router };

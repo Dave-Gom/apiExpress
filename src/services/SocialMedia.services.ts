@@ -42,7 +42,8 @@ export const putSocialMedia = async (data: SocialMediaInterface, id: number, use
             { where: { id } }
         );
         if (response) {
-            return response;
+            const data = await SocialMedia.findByPk<Model<SocialMediaInterface>>(id);
+            return data;
         }
         return null;
     } catch (error) {
@@ -59,6 +60,8 @@ export const deleteSocialMedia = async (id: number, user: number) => {
             },
             { where: { id } }
         );
+        console.log('hola');
+
         if (response.length > 0) {
             const deleteResponse = await SocialMedia.destroy<Model<SocialMediaInterface>>({ where: { id } });
             return deleteResponse;
