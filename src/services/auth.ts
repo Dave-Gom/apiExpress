@@ -1,5 +1,5 @@
 import { User } from '../database/models/user';
-import { AuthInterface } from '../interfaces/Auth.interface';
+import { AuthInterface, loginResponse } from '../interfaces/Auth.interface';
 import { UserInterface } from '../interfaces/User.interface';
 import { generateToken } from '../utils/jdt.handler';
 import { encript, verify } from '../utils/password.handler';
@@ -24,18 +24,19 @@ export const registerNewUser = async (userData: UserInterface) => {
 
 export const loginUser = async ({ email, password }: AuthInterface) => {
     try {
-        console.log('data: ', { email, password });
         const check = await User.findOne({ where: { email } });
         if (check && check.dataValues) {
             const isCorrect = await verify(password, check.dataValues.password);
             if (isCorrect) {
                 const token = await generateToken(check.dataValues.email);
-                const data = { token, user: check.dataValues };
+                const data: loginResponse = { token, data: check.dataValues };
                 return data;
             }
-            return 'Contraseña incorrecta';
-        } else throw 'No existe usuario';
+        }
+        const incorrect: loginResponse = { token: null, data: 'Usuario o contraseña incorrectos' };
+        return incorrect;
     } catch (error) {
-        return error;
+        const incorrect: loginResponse = { token: null, data: `${error}` };
+        return incorrect;
     }
 };

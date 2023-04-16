@@ -16,6 +16,12 @@ export const RegisterController = async ({ body }: Request, res: Response) => {
 export const LoginController = async ({ body }: Request, res: Response) => {
     try {
         const dato = await loginUser(body);
-        res.send(dato);
-    } catch (error) {}
+        if (dato.token) {
+            res.send(dato);
+        } else {
+            handleHttp(res, dato, 401);
+        }
+    } catch (error) {
+        handleHttp(res, `${error}`);
+    }
 };
