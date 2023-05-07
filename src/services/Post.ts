@@ -1,6 +1,7 @@
 import { Model } from 'sequelize-typescript';
 import { Categoria } from '../database/models/Categorias';
 import { Post } from '../database/models/Post';
+import { User } from '../database/models/user';
 import { CategoriaInstance, PostInstance } from '../interfaces/Instances.interface';
 import { PostInterface } from '../interfaces/Post.interface';
 
@@ -29,7 +30,27 @@ export const insertPost = async (data: PostInterface, user: number, categoriaId?
 
 export const getPosts = async () => {
     try {
-        const posts = await Post.findAll<PostInstance>({ where: { deletedAt: null } });
+        const posts = await Post.findAll<PostInstance>({
+            where: { deletedAt: null },
+            include: [
+                {
+                    model: User,
+                    foreignKey: 'author',
+                    as: 'postAuthor',
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt'],
+                    },
+                },
+                {
+                    model: User,
+                    foreignKey: 'updatedBy',
+                    as: 'editor',
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt'],
+                    },
+                },
+            ],
+        });
         if (posts) return posts;
         return null;
     } catch (error) {

@@ -20,7 +20,7 @@ export const checkJWT = (req: UserRequest, res: Response, next: NextFunction) =>
             next();
         }
     } catch (error) {
-        res.statusCode = 402;
+        res.statusCode = 401;
         res.send('Sesion no valida');
     }
 };

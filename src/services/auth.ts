@@ -1,3 +1,4 @@
+import { Model } from 'sequelize-typescript';
 import { User } from '../database/models/user';
 import { AuthInterface, loginResponse } from '../interfaces/Auth.interface';
 import { UserInterface } from '../interfaces/User.interface';
@@ -11,7 +12,7 @@ export const registerNewUser = async (userData: UserInterface) => {
         if (check) throw 'Usuario ya existe';
         else {
             const passwordHash = await encript(password);
-            const registerNewUser = await User.create({ ...userData, password: passwordHash });
+            const registerNewUser = await User.create<Model<UserInterface>>({ ...userData, password: passwordHash });
             if (registerNewUser) {
                 return registerNewUser;
             } else throw 'No se pudo crear el usuario';

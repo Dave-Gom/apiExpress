@@ -31,6 +31,7 @@ export const getPagesService = async () => {
                     attributes: { include: ['title', 'description', 'limit', 'author'] },
                 },
                 SectionRecomendado,
+                'updatedByDetails',
             ],
         });
         if (responseInsert) return responseInsert;

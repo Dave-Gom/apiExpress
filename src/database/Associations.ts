@@ -85,10 +85,12 @@ TextSection.belongsTo(User, {
 //posts y users
 Post.belongsTo(User, {
     foreignKey: 'author',
+    as: 'postAuthor',
 });
 
 Post.belongsTo(User, {
     foreignKey: 'updatedBy',
+    as: 'editor',
 });
 
 User.hasMany(Post, {

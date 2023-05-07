@@ -5,7 +5,7 @@ import { checkJWT } from '../middlewares/Session';
 const router = Router();
 
 router.post('/', checkJWT, postCreatePage);
-router.get('/', checkJWT, getPages);
+router.get('/', getPages);
 router.put('/:id', checkJWT, putPages);
 router.delete('/:id', checkJWT, deletePage);
 
