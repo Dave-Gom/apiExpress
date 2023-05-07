@@ -29,15 +29,12 @@ export const createCategoria = async ({ body }: Request, res: Response) => {
 
 export const readCategorias = async ({ body }: Request, res: Response) => {
     try {
-        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-        if (user) {
-            const responseItem = await getCategorias();
-            if (responseItem) {
-                res.send(responseItem);
-            } else {
-                throw new Error(`No se pudo obtener las categoria`);
-            }
-        } else throw new Error(`Usuario no existe ${body.user}`);
+        const responseItem = await getCategorias();
+        if (responseItem) {
+            res.send(responseItem);
+        } else {
+            throw new Error(`No se pudo obtener las categorias`);
+        }
     } catch (e) {
         handleHttp(res, `ERROR_GET_CATEGORIES: ${e}`);
     }

@@ -104,10 +104,12 @@ User.hasMany(Post, {
 //categorias y users
 Categoria.belongsTo(User, {
     foreignKey: 'author',
+    as: 'categoriaAuthor',
 });
 
 Categoria.belongsTo(User, {
     foreignKey: 'updatedBy',
+    as: 'categoriaEditor',
 });
 
 User.hasMany(Categoria, {

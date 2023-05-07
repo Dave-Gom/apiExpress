@@ -21,7 +21,7 @@ const Post = sequelize.define<Model, PostInterface>(
         },
         title: { type: DataType.STRING },
         content: {
-            type: DataType.STRING,
+            type: DataType.TEXT,
             allowNull: false,
         },
         image: {
@@ -44,7 +44,7 @@ const Post = sequelize.define<Model, PostInterface>(
             allowNull: false,
         },
         longDesc: {
-            type: DataType.STRING,
+            type: DataType.TEXT,
             allowNull: false,
         },
     },
