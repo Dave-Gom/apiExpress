@@ -21,7 +21,7 @@ export const postCategoria = async (data: CategoriaInterface, user: number) => {
 
 export const getCategorias = async () => {
     try {
-        const responseInsert = await Categoria.findAll<CategoriaInstance>({
+        const responseCategoria = await Categoria.findAll<CategoriaInstance>({
             where: { deletedAt: null },
             include: [
                 Post,
@@ -35,7 +35,7 @@ export const getCategorias = async () => {
                 },
                 {
                     model: User,
-                    foreignKey: 'updatedBy',
+                    foreignKey: 'postCategorias',
                     attributes: {
                         exclude: ['password', 'createdAt', 'updatedAt', 'role', 'updatedBy', 'author'],
                     },
@@ -46,8 +46,9 @@ export const getCategorias = async () => {
                 exclude: ['createdAt', 'deletedAt', 'updatedAt'],
             },
         });
-        if (responseInsert) {
-            return responseInsert;
+
+        if (responseCategoria) {
+            return responseCategoria;
         }
         return null;
     } catch (error) {

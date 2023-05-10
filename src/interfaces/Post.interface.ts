@@ -8,6 +8,7 @@ export interface PostInterface {
     image: string;
     updatedBy: number;
     deletedAt: Date | null;
+    active: boolean;
 }
 
 export interface SectionRecomendadoInterface {

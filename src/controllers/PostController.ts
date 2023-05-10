@@ -4,6 +4,7 @@ import { Model } from 'sequelize-typescript';
 import { User } from '../database/models/user';
 import { UserInterface } from '../interfaces/User.interface';
 
+import { PostInterface } from '../interfaces/Post.interface';
 import { delPost, getPost, getPosts, insertPost, putPost } from '../services/Post';
 import { handleHttp } from '../utils/error.handler';
 
@@ -12,9 +13,16 @@ export const createPost = async ({ body, params }: Request, res: Response) => {
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
         if (user) {
             const responseItem = await insertPost(
-                body,
+                {
+                    active: body.active,
+                    brief: body.brief,
+                    image: body.image,
+                    longDesc: body.longDesc,
+                    title: body.title,
+                    content: body.content,
+                } as PostInterface,
                 user.dataValues.id,
-                params.idCategoria ? parseInt(params.idCategoria) : undefined
+                body.categorias ? body.categorias : undefined
             );
             res.send(responseItem);
         } else throw new Error(`Usuario no existe ${body.user}`);

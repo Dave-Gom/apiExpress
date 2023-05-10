@@ -47,6 +47,10 @@ const Post = sequelize.define<Model, PostInterface>(
             type: DataType.TEXT,
             allowNull: false,
         },
+        active: {
+            type: DataType.BOOLEAN,
+            defaultValue: false,
+        },
     },
     {
         timestamps: true,

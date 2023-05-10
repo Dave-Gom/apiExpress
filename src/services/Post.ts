@@ -5,18 +5,22 @@ import { User } from '../database/models/user';
 import { CategoriaInstance, PostInstance } from '../interfaces/Instances.interface';
 import { PostInterface } from '../interfaces/Post.interface';
 
-export const insertPost = async (data: PostInterface, user: number, categoriaId?: number) => {
+export const insertPost = async (data: PostInterface, user: number, categorias?: number[]) => {
+    //probar si puedo recibir arrays de CategoriaInstance
     try {
         const responseInsert = await Post.create<PostInstance>(
             { ...data, author: user, updatedBy: user },
             { include: [Categoria] }
         );
         if (responseInsert) {
-            if (categoriaId) {
-                const categoria = await Categoria.findByPk<CategoriaInstance>(categoriaId, { include: [Post] });
-                if (categoria && categoria.addPost && responseInsert && responseInsert.addCategoria) {
-                    await categoria.addPost(responseInsert);
-                    await responseInsert.addCategoria(categoria);
+            if (categorias) {
+                for (const categoriaId of categorias) {
+                    const categoria = await Categoria.findByPk<CategoriaInstance>(categoriaId, { include: [Post] });
+                    console.log(`Categoria No. ${categoriaId}`, categoria);
+                    if (categoria && categoria.addPost && responseInsert && responseInsert.addCategoria) {
+                        await categoria.addPost(responseInsert);
+                        await responseInsert.addCategoria(categoria);
+                    }
                 }
             }
             return responseInsert;
@@ -49,6 +53,7 @@ export const getPosts = async () => {
                         exclude: ['password', 'createdAt', 'updatedAt'],
                     },
                 },
+                Categoria,
             ],
         });
         if (posts) return posts;
