@@ -56,7 +56,19 @@ export const updatePost = async ({ body, params }: Request, res: Response) => {
     try {
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
         if (user) {
-            const responseItem = await putPost(body, params.id, user.dataValues.id);
+            const responseItem = await putPost(
+                {
+                    active: body.active,
+                    brief: body.brief,
+                    image: body.image,
+                    longDesc: body.longDesc,
+                    title: body.title,
+                    content: body.content,
+                } as PostInterface,
+                params.id,
+                user.dataValues.id,
+                body.categorias
+            );
             res.send(responseItem);
         } else throw new Error(`Usuario no existe ${body.user}`);
     } catch (e) {

@@ -75,13 +75,34 @@ export const getPost = async (id: string) => {
     }
 };
 
-export const putPost = async ({ content, image, title }: PostInterface, id: string, user: number) => {
+export const putPost = async (
+    { content, image, title }: PostInterface,
+    id: string,
+    user: number,
+    categorias?: number[]
+) => {
     try {
         const posts = await Post.update<Model<PostInterface>>(
             { content, image, title, updatedBy: user },
             { where: { id, deletedAt: null } }
         );
-        if (posts) return posts;
+        if (posts) {
+            const response = await Post.findOne<PostInstance>({
+                where: { id, deletedAt: null },
+                include: [Categoria],
+            });
+            if (categorias) {
+                for (const categoriaId of categorias) {
+                    const categoria = await Categoria.findByPk<CategoriaInstance>(categoriaId, { include: [Post] });
+                    console.log(`Categoria No. ${categoriaId}`, categoria);
+                    if (categoria && categoria.addPost && response && response.addCategoria) {
+                        await categoria.addPost(response);
+                        await response.addCategoria(categoria);
+                    }
+                }
+            }
+            return posts;
+        }
         return null;
     } catch (error) {
         console.error('Error al leer las publicaciones ', error);
