@@ -75,15 +75,10 @@ export const getPost = async (id: string) => {
     }
 };
 
-export const putPost = async (
-    { content, image, title }: PostInterface,
-    id: string,
-    user: number,
-    categorias?: number[]
-) => {
+export const putPost = async (postData: PostInterface, id: string, user: number, categorias?: number[]) => {
     try {
         const posts = await Post.update<Model<PostInterface>>(
-            { content, image, title, updatedBy: user },
+            { ...postData, updatedBy: user },
             { where: { id, deletedAt: null } }
         );
         if (posts) {

@@ -59,7 +59,7 @@ export const updatePage = async (id: string, { active, name }: PageInteface, use
 export const detelePageService = async (id: string, user: number) => {
     try {
         const responseInsert = await Page.update({ updatedBy: user, deletedAt: new Date() }, { where: { id } });
-        if (responseInsert) return responseInsert;
+        if (responseInsert) return true;
         return null;
     } catch (error) {
         console.error('Error al insertar la pagina ', error);
