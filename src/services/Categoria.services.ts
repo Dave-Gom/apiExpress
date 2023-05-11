@@ -43,7 +43,7 @@ export const getCategorias = async () => {
                 },
             ],
             attributes: {
-                exclude: ['createdAt', 'deletedAt', 'updatedAt'],
+                exclude: ['createdAt', 'deletedAt'],
             },
         });
 
@@ -74,7 +74,7 @@ export const putCategoria = async ({ active, nombre }: CategoriaInterface, id: s
                 where: { id },
             }
         );
-        if (categoria !== null) return 'Actualizado exitosamente';
+        if (categoria !== null) return true;
         return null;
     } catch (error) {
         return null;
