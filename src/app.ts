@@ -14,6 +14,7 @@ const main = async () => {
                 extended: true,
             })
         );
+        app.use(express.static('storage'));
         app.use(express.json());
         app.use(cors());
         app.use(router);
