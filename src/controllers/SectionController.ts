@@ -33,7 +33,7 @@ import { handleHttp } from '../utils/error.handler';
 export const createSection = async ({ body, params }: Request, res: Response) => {
     try {
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-        const page = await Page.findByPk<PageInstance>(params.pageId);
+        const page = params.pageId ? await Page.findByPk<PageInstance>(params.pageId) : null;
         if (user) {
             switch (params.type) {
                 case SectionTypesEnum.HERO:

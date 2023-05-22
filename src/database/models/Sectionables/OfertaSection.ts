@@ -15,6 +15,14 @@ const OfertaSection = sequelize.define<Model, OfertaSectionInterface>(
             type: DataType.STRING,
             allowNull: false,
         },
+        prevContent: {
+            type: DataType.STRING,
+            allowNull: false,
+        },
+        buttonText: {
+            type: DataType.STRING,
+            allowNull: false,
+        },
         author: {
             type: DataType.INTEGER,
             references: {

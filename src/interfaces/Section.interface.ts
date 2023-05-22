@@ -34,9 +34,11 @@ export interface OfertaSectionInterface {
     title: string;
     content?: string;
     principalImage: string;
+    prevContent: string;
     leftImage: string;
     rigthImage: string;
     position: number;
+    buttonText: string;
     author: number;
     navegate: string;
     updatedBy: number;

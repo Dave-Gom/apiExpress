@@ -36,12 +36,15 @@ export const insertHeroSection = async (section: HeroSectionInterface, page: Pag
                 include: 'pages',
             }
         );
-        if (responseInsert && responseInsert.addPages && page && page.addHero) {
-            //Puercaso, ver para cambiar en el futuro
-            await responseInsert.addPages(page);
-            await page.addHero(responseInsert);
+        if (responseInsert && responseInsert.addPages) {
+            if (page && page.addHero) {
+                //Puercaso, ver para cambiar en el futuro
+                await responseInsert.addPages(page);
+                await page.addHero(responseInsert);
+            }
             return responseInsert;
         }
+
         return null;
     } catch (error) {
         console.error('Error al insertar la pagina ', error);
@@ -58,12 +61,14 @@ export const insertOfertaSection = async (section: OfertaSectionInterface, page:
                 author: user,
                 updatedBy: user,
             },
-            { include: Page }
+            { include: 'pages' }
         );
 
-        if (responseInsert && responseInsert.addPages && page && page.addOfertaSection) {
-            await responseInsert.addPages(page);
-            await page.addOfertaSection(responseInsert);
+        if (responseInsert && responseInsert.addPages) {
+            if (page && page.addOfertaSection) {
+                await responseInsert.addPages(page);
+                await page.addOfertaSection(responseInsert);
+            }
             return responseInsert;
         }
         return null;

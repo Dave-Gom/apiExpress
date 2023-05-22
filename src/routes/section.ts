@@ -10,7 +10,7 @@ import { checkJWT } from '../middlewares/Session';
 
 const router = Router();
 
-router.post('/:type/:pageId', checkJWT, createSection);
+router.post('/:type/:pageId?', checkJWT, createSection);
 router.get('/:type', checkJWT, readSection);
 router.put('/:type/:id/', checkJWT, updateSection);
 router.post('/ADD/POSTS/:id', checkJWT, addListPosts);
