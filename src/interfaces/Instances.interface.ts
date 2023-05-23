@@ -43,4 +43,5 @@ export interface PostInstance extends Model<PostInterface> {
 export interface ListaInstance extends Model<ListInterface> {
     addPost?: (obj: PostInstance | PostInstance[]) => Promise<ListaInstance>;
     addPage?: (obj: PageInstance) => Promise<ListaInstance>;
+    setPosts?: (obj: PostInstance | PostInstance[]) => Promise<ListaInstance>;
 }

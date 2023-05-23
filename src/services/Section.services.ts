@@ -110,9 +110,12 @@ export const insertListSection = async (secction: ListInterface, page: PageInsta
             },
             { include: [Page] }
         );
-        if (responseInsert && responseInsert.addPage && page && page.addListSection) {
-            await page.addListSection(responseInsert);
-            await responseInsert.addPage(page);
+        if (responseInsert && responseInsert.addPage) {
+            if (page && page.addListSection) {
+                await page.addListSection(responseInsert);
+                await responseInsert.addPage(page);
+                console.log('lista agregada');
+            }
             return responseInsert;
         }
         return null;
@@ -228,14 +231,19 @@ export const getTextoSections = async () => {
     }
 };
 
-export const putListOptions = async (secction: ListInterface, listaId: number, user: number) => {
+export const putListSection = async (secction: ListInterface, listaId: number, user: number) => {
     try {
         const updateResponse = await ListSection.update<ListaInstance>(
             { ...secction, updatedBy: user },
             { where: { id: listaId } }
         );
         if (updateResponse) {
-            return updateResponse;
+            const list = await ListSection.findByPk<ListaInstance>(listaId, { include: Post });
+            if (list) {
+                return list;
+            } else {
+                return updateResponse;
+            }
         }
         return null;
     } catch (error) {
@@ -315,18 +323,21 @@ export const putRecomendadoSection = async (
 export const addPosts = async (posts: number[], listId: number, user: number) => {
     try {
         const lista = await ListSection.findByPk<ListaInstance>(listId, { include: [Post] });
-        if (lista && lista.addPost) {
+
+        if (lista && lista.addPost && lista.setPosts) {
             const postsToAdd = await Post.findAll<PostInstance>({
                 where: { id: posts },
             });
             if (postsToAdd) {
-                await lista.addPost(postsToAdd);
-                return lista;
+                await lista.setPosts([]);
+                await lista.setPosts(postsToAdd);
+                await lista.reload();
             }
+            return lista;
+        } else {
+            return null;
         }
-        return null;
     } catch (error) {
-        console.error(error);
         return null;
     }
 };

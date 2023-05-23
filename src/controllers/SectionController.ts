@@ -18,7 +18,7 @@ import {
     insertRecomendadoSection,
     insertTextSection,
     putHero,
-    putListOptions,
+    putListSection,
     putOfertaSection,
     putRecomendadoSection,
     putTextoSection,
@@ -135,7 +135,7 @@ export const updateSection = async ({ body, params }: Request, res: Response) =>
         if (user) {
             switch (params.type) {
                 case SectionTypesEnum.POSTS:
-                    const Posts = await putListOptions(body, parseInt(params.id, 10), user?.dataValues.id);
+                    const Posts = await putListSection(body, parseInt(params.id, 10), user?.dataValues.id);
                     res.send(Posts);
                     break;
                 case SectionTypesEnum.HERO:
@@ -170,9 +170,14 @@ export const addListPosts = async ({ body, params }: Request, res: Response) => 
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
         if (user) {
             const Posts = await addPosts(body.posts, parseInt(params.id, 10), user.dataValues.id);
-            res.send(Posts);
+            if (Posts) {
+                res.send(Posts);
+            } else {
+                throw 'Error desconocido';
+            }
+        } else {
+            throw 'No user';
         }
-        throw 'No user';
     } catch (e) {
         handleHttp(res, `ERROR_ADD_POSTS_TOLIST_SECTION: ${e}`);
     }

@@ -1,5 +1,6 @@
 import { Model } from 'sequelize-typescript';
 import { Page } from '../database/models/Pages';
+import { Post } from '../database/models/Post';
 import { ListSection } from '../database/models/Sectionables/List.section';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
 import { SectionRecomendado } from '../database/models/Sectionables/RecomendadoSection';
@@ -28,7 +29,14 @@ export const getPagesService = async () => {
                 OfertaSection,
                 {
                     model: ListSection,
-                    attributes: { include: ['title', 'description', 'limit', 'author'] },
+                    attributes: {
+                        include: ['title', 'description', 'limit', 'author'],
+                    },
+                    include: [
+                        {
+                            model: Post,
+                        },
+                    ],
                 },
                 SectionRecomendado,
                 'updatedByDetails',
@@ -38,6 +46,8 @@ export const getPagesService = async () => {
         return null;
     } catch (error) {
         console.error('Error al optener las paginas');
+        console.log(error);
+
         return null;
     }
 };

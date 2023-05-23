@@ -192,13 +192,9 @@ ListSection.belongsToMany(Page, {
 
 // Listsections y Posts
 
-ListSection.belongsToMany(Post, {
-    through: 'listPost',
-});
+ListSection.belongsToMany(Post, { through: 'listPost' });
 
-Post.belongsToMany(ListSection, {
-    through: 'listPost',
-});
+Post.belongsToMany(ListSection, { through: 'listPost' });
 
 //categorias y posts
 Categoria.belongsToMany(Post, {
