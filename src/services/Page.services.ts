@@ -5,6 +5,7 @@ import { ListSection } from '../database/models/Sectionables/List.section';
 import { OfertaSection } from '../database/models/Sectionables/OfertaSection';
 import { SectionRecomendado } from '../database/models/Sectionables/RecomendadoSection';
 import { TextSection } from '../database/models/Sectionables/TextSection';
+import { PageInstance } from '../interfaces/Instances.interface';
 import { PageInteface } from '../interfaces/Pages.interface';
 
 export const insertPage = async (page: PageInteface, user: number) => {
@@ -18,10 +19,67 @@ export const insertPage = async (page: PageInteface, user: number) => {
     }
 };
 
-export const getPagesService = async () => {
+export const getPagesService = async (id?: number) => {
     try {
-        const responseInsert = await Page.findAll({
-            where: { deletedAt: null },
+        const responseInsert = id
+            ? await Page.findByPk<PageInstance>(id, {
+                  include: [
+                      'authorDetails',
+                      'hero',
+                      TextSection,
+                      OfertaSection,
+                      {
+                          model: ListSection,
+                          attributes: {
+                              include: ['title', 'description', 'limit', 'author'],
+                          },
+                          include: [
+                              {
+                                  model: Post,
+                              },
+                          ],
+                      },
+                      SectionRecomendado,
+                      'updatedByDetails',
+                  ],
+              })
+            : await Page.findAll<PageInstance>({
+                  where: { deletedAt: null },
+                  include: [
+                      'authorDetails',
+                      'hero',
+                      TextSection,
+                      OfertaSection,
+                      {
+                          model: ListSection,
+                          attributes: {
+                              include: ['title', 'description', 'limit', 'author'],
+                          },
+                          include: [
+                              {
+                                  model: Post,
+                              },
+                          ],
+                      },
+                      SectionRecomendado,
+                      'updatedByDetails',
+                  ],
+              });
+        if (responseInsert) {
+            return responseInsert;
+        }
+        return null;
+    } catch (error) {
+        console.error('Error al optener las paginas');
+        console.log(error);
+
+        return null;
+    }
+};
+
+export const getPageById = async (id: number) => {
+    try {
+        const responseGet = await Page.findByPk<PageInstance>(id, {
             include: [
                 'authorDetails',
                 'hero',
@@ -42,12 +100,12 @@ export const getPagesService = async () => {
                 'updatedByDetails',
             ],
         });
-        if (responseInsert) return responseInsert;
+
+        if (responseGet) {
+            return responseGet;
+        }
         return null;
     } catch (error) {
-        console.error('Error al optener las paginas');
-        console.log(error);
-
         return null;
     }
 };
