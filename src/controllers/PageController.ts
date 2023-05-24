@@ -19,7 +19,7 @@ export const postCreatePage = async ({ body }: Request, res: Response) => {
 
 export const getPages = async (req: Request, res: Response) => {
     try {
-        const response = await getPagesService(req.params.id ? parseInt(req.params.id, 10) : undefined);
+        const response = await getPagesService();
         res.send(response);
     } catch (e) {
         handleHttp(res, `ERROR_GET_PAGE:: ${e}`);

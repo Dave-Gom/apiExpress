@@ -19,51 +19,36 @@ export const insertPage = async (page: PageInteface, user: number) => {
     }
 };
 
-export const getPagesService = async (id?: number) => {
+export const getPagesService = async () => {
     try {
-        const responseInsert = id
-            ? await Page.findByPk<PageInstance>(id, {
-                  include: [
-                      'authorDetails',
-                      'hero',
-                      TextSection,
-                      OfertaSection,
-                      {
-                          model: ListSection,
-                          attributes: {
-                              include: ['title', 'description', 'limit', 'author'],
-                          },
-                          include: [
-                              {
-                                  model: Post,
-                              },
-                          ],
-                      },
-                      SectionRecomendado,
-                      'updatedByDetails',
-                  ],
-              })
-            : await Page.findAll<PageInstance>({
-                  include: [
-                      'authorDetails',
-                      'hero',
-                      TextSection,
-                      OfertaSection,
-                      {
-                          model: ListSection,
-                          attributes: {
-                              include: ['title', 'description', 'limit', 'author'],
-                          },
-                          include: [
-                              {
-                                  model: Post,
-                              },
-                          ],
-                      },
-                      SectionRecomendado,
-                      'updatedByDetails',
-                  ],
-              });
+        const responseInsert = await Page.findAll<PageInstance>({
+            include: [
+                'authorDetails',
+                'hero',
+                TextSection,
+                OfertaSection,
+                {
+                    model: ListSection,
+                    attributes: {
+                        include: ['title', 'description', 'limit', 'author'],
+                    },
+                    include: [
+                        {
+                            model: Post,
+                        },
+                    ],
+                },
+                {
+                    model: SectionRecomendado,
+                    include: [
+                        {
+                            model: Post,
+                        },
+                    ],
+                },
+                'updatedByDetails',
+            ],
+        });
         if (responseInsert) {
             return responseInsert;
         }
@@ -95,7 +80,14 @@ export const getPageById = async (id: number) => {
                         },
                     ],
                 },
-                SectionRecomendado,
+                {
+                    model: SectionRecomendado,
+                    include: [
+                        {
+                            model: Post,
+                        },
+                    ],
+                },
                 'updatedByDetails',
             ],
             paranoid: true,
