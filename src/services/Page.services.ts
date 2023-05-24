@@ -44,7 +44,6 @@ export const getPagesService = async (id?: number) => {
                   ],
               })
             : await Page.findAll<PageInstance>({
-                  where: { deletedAt: null },
                   include: [
                       'authorDetails',
                       'hero',
@@ -99,6 +98,7 @@ export const getPageById = async (id: number) => {
                 SectionRecomendado,
                 'updatedByDetails',
             ],
+            paranoid: true,
         });
 
         if (responseGet) {

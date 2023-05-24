@@ -1,4 +1,3 @@
-
 import { DataType, Model } from 'sequelize-typescript';
 import { PageInteface } from '../../interfaces/Pages.interface';
 import { sequelize } from '../database';
@@ -36,13 +35,10 @@ const Page = sequelize.define<Model, PageInteface>(
             },
             allowNull: false,
         },
-        deletedAt: {
-            type: DataType.DATE,
-            defaultValue: null,
-        },
     },
     {
         timestamps: true,
+        paranoid: true,
     }
 );
 
