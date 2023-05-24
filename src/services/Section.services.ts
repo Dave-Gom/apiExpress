@@ -153,6 +153,7 @@ export const insertRecomendadoSection = async (
                 if (post && post.addSectionRecomendado) {
                     await post.addSectionRecomendado(responseInsert);
                     await responseInsert.addPost(post);
+                    await responseInsert.reload();
                 }
             }
             return responseInsert;
@@ -303,7 +304,8 @@ export const putTextoSection = async (newData: TextSectionInterface, textoId: nu
 export const putRecomendadoSection = async (
     newData: SectionRecomendadoInterface,
     recomendadoId: number,
-    user: number
+    user: number,
+    post?: number
 ) => {
     try {
         const updateResponse = await SectionRecomendado.update<SectionRecomendadoInstance>(
@@ -311,7 +313,23 @@ export const putRecomendadoSection = async (
             { where: { id: recomendadoId } }
         );
         if (updateResponse) {
-            return updateResponse;
+            const recom = await SectionRecomendado.findByPk<SectionRecomendadoInstance>(recomendadoId, {
+                include: Post,
+            });
+            if (recom) {
+                const toAdd = await Post.findByPk<PostInstance>(post);
+                if (post && toAdd) {
+                    if (toAdd.setSectionRecomendados && recom && recom.setPosts) {
+                        await recom.setPosts(toAdd);
+                        await toAdd.setSectionRecomendados([]);
+                        await toAdd.setSectionRecomendados(recom);
+                        await recom.reload();
+                        return recom;
+                    }
+                }
+                return recom;
+            }
+            return null;
         }
         return null;
     } catch (error) {

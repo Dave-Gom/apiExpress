@@ -61,7 +61,6 @@ export const createSection = async ({ body, params }: Request, res: Response) =>
                     res.send(posts);
                     break;
                 case SectionTypesEnum.RECOMENDADO:
-                    console.log('Recibe: ', body, '\n');
                     const recomendado = await insertRecomendadoSection(
                         { ...body },
                         page,
@@ -147,7 +146,12 @@ export const updateSection = async ({ body, params }: Request, res: Response) =>
                     res.send(ofertas);
                     break;
                 case SectionTypesEnum.RECOMENDADO:
-                    const recomendado = await putRecomendadoSection(body, parseInt(params.id, 10), user?.dataValues.id);
+                    const recomendado = await putRecomendadoSection(
+                        body,
+                        parseInt(params.id, 10),
+                        user?.dataValues.id,
+                        body.post ?? undefined
+                    );
                     res.send(recomendado);
                     break;
                 case SectionTypesEnum.TEXTO:
