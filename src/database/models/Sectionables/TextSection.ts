@@ -25,6 +25,7 @@ const TextSection = sequelize.define<Model, TextSectionInterface>(
         },
         position: {
             type: DataType.INTEGER,
+            allowNull: false,
         },
         updatedBy: {
             type: DataType.INTEGER,

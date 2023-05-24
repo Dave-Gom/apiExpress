@@ -292,7 +292,8 @@ export const putTextoSection = async (newData: TextSectionInterface, textoId: nu
             { where: { id: textoId } }
         );
         if (updateResponse) {
-            return updateResponse;
+            const seccion = await TextSection.findByPk<TextSectionInstance>(textoId);
+            return seccion;
         }
         return null;
     } catch (error) {
