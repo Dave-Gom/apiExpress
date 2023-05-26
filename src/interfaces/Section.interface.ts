@@ -52,6 +52,7 @@ export interface ListInterface {
     author: number;
     position: number;
     updatedBy: number;
+    buttonText?: string;
 }
 
 export enum SectionTypesEnum {

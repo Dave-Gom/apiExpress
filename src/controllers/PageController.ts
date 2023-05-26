@@ -17,7 +17,16 @@ export const postCreatePage = async ({ body }: Request, res: Response) => {
     }
 };
 
-export const getPages = async (req: Request, res: Response) => {
+export const getPages = async ({ params }: Request, res: Response) => {
+    try {
+        const response = await getPagesService(params.condition);
+        res.send(response);
+    } catch (e) {
+        handleHttp(res, `ERROR_GET_PAGE:: ${e}`);
+    }
+};
+
+export const getActivePages = async (req: Request, res: Response) => {
     try {
         const response = await getPagesService();
         res.send(response);

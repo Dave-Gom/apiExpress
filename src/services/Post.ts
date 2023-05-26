@@ -64,9 +64,54 @@ export const getPosts = async () => {
     }
 };
 
+export const getActivePosts = async () => {
+    try {
+        const posts = await Post.findAll<PostInstance>({
+            where: { deletedAt: null, active: true },
+            include: [
+                {
+                    model: User,
+                    foreignKey: 'author',
+                    as: 'postAuthor',
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt'],
+                    },
+                },
+                {
+                    model: User,
+                    foreignKey: 'updatedBy',
+                    as: 'editor',
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt'],
+                    },
+                },
+                Categoria,
+            ],
+        });
+        if (posts) return posts;
+        return null;
+    } catch (error) {
+        console.error('Error al leer las publicaciones ', error);
+        return null;
+    }
+};
+
 export const getPost = async (id: string) => {
     try {
         const posts = await Post.findOne<Model<PostInterface>>({ where: { id, deletedAt: null } });
+        if (posts) return posts;
+        return null;
+    } catch (error) {
+        console.error('Error al leer las publicaciones ', error);
+        return null;
+    }
+};
+
+export const activePosts = async (id: string) => {
+    try {
+        const posts = await Post.findOne<Model<PostInterface>>({
+            where: { id, deletedAt: null, active: true },
+        });
         if (posts) return posts;
         return null;
     } catch (error) {

@@ -7,6 +7,7 @@ import { SectionRecomendado } from '../database/models/Sectionables/RecomendadoS
 import { TextSection } from '../database/models/Sectionables/TextSection';
 import { PageInstance } from '../interfaces/Instances.interface';
 import { PageInteface } from '../interfaces/Pages.interface';
+import { getCondition } from '../utils/api.utils';
 
 export const insertPage = async (page: PageInteface, user: number) => {
     try {
@@ -19,9 +20,10 @@ export const insertPage = async (page: PageInteface, user: number) => {
     }
 };
 
-export const getPagesService = async () => {
+export const getPagesService = async (condition?: string) => {
     try {
         const responseInsert = await Page.findAll<PageInstance>({
+            where: condition ? getCondition(condition) : undefined,
             include: [
                 'authorDetails',
                 'hero',
@@ -102,10 +104,10 @@ export const getPageById = async (id: number) => {
     }
 };
 
-export const updatePage = async (id: string, { active, name }: PageInteface, user: number) => {
+export const updatePage = async (id: string, { active, name, showInNav }: PageInteface, user: number) => {
     try {
         const responseInsert = await Page.update<Model<PageInteface>>(
-            { active, name, updatedBy: user },
+            { active, name, updatedBy: user, showInNav },
             { where: { id } }
         );
         if (responseInsert) return responseInsert;

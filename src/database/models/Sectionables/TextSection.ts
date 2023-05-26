@@ -12,7 +12,7 @@ const TextSection = sequelize.define<Model, TextSectionInterface>(
             primaryKey: true,
         },
         content: {
-            type: DataType.STRING,
+            type: DataType.TEXT,
             allowNull: false,
         },
         author: {

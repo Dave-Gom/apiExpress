@@ -35,6 +35,10 @@ const Page = sequelize.define<Model, PageInteface>(
             },
             allowNull: false,
         },
+        showInNav: {
+            type: DataType.BOOLEAN,
+            defaultValue: false,
+        },
     },
     {
         timestamps: true,

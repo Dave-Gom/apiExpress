@@ -6,6 +6,7 @@ const router = Router();
 
 router.post('/', checkJWT, postCreatePage);
 router.get('/', getPages);
+router.get('/pages/:condition?', getPages);
 router.get('/:id', getPage);
 router.put('/:id', checkJWT, putPages);
 router.delete('/:id', checkJWT, deletePage);

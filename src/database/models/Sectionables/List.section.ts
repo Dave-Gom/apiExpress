@@ -15,6 +15,10 @@ const ListSection = sequelize.define<Model, ListInterface>(
             type: DataType.STRING,
             allowNull: false,
         },
+        buttonText: {
+            type: DataType.STRING,
+            allowNull: true,
+        },
         description: {
             type: DataType.STRING,
             allowNull: true,

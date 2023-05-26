@@ -5,7 +5,7 @@ import { User } from '../database/models/user';
 import { UserInterface } from '../interfaces/User.interface';
 
 import { PostInterface } from '../interfaces/Post.interface';
-import { delPost, getPost, getPosts, insertPost, putPost } from '../services/Post';
+import { delPost, getActivePosts, getPost, getPosts, insertPost, putPost } from '../services/Post';
 import { handleHttp } from '../utils/error.handler';
 
 export const createPost = async ({ body, params }: Request, res: Response) => {
@@ -40,7 +40,28 @@ export const readPosts = async ({ body }: Request, res: Response) => {
     }
 };
 
+export const readActivePosts = async ({ body }: Request, res: Response) => {
+    try {
+        const responseItem = await getActivePosts();
+        res.send(responseItem);
+    } catch (e) {
+        handleHttp(res, `ERROR_GET_POST: ${e}`);
+    }
+};
+
 export const readPost = async ({ body, params }: Request, res: Response) => {
+    try {
+        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
+        if (user) {
+            const responseItem = await getPost(params.id);
+            res.send(responseItem);
+        } else throw new Error(`Usuario no existe ${body.user}`);
+    } catch (e) {
+        handleHttp(res, `ERROR_GET_POST: ${e}`);
+    }
+};
+
+export const readPublishedPost = async ({ body, params }: Request, res: Response) => {
     try {
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
         if (user) {
