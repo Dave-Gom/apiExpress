@@ -13,13 +13,28 @@ export const RegisterController = async ({ body }: Request, res: Response) => {
     }
 };
 
-export const LoginController = async ({ body }: Request, res: Response) => {
+export const LoginController = async (req: Request, res: Response) => {
     try {
+        console.log('Aca\n');
+
+        let { body } = req;
         const dato = await loginUser(body);
         if (dato.token) {
-            res.send(dato);
+            res.send({ dato: dato.data });
         } else {
             handleHttp(res, dato, 401);
+        }
+    } catch (error) {
+        handleHttp(res, `${error}`);
+    }
+};
+
+export const SessionController = async (req: Request, res: Response) => {
+    try {
+        if (req.session && req.session.id) {
+            res.send(req.session.id);
+        } else {
+            handleHttp(res, false, 401);
         }
     } catch (error) {
         handleHttp(res, `${error}`);
