@@ -4,7 +4,8 @@ import express from 'express';
 import session from 'express-session';
 import './database/Associations';
 import { sequelize } from './database/database';
-import { router } from './routes/index';
+import { loadRoutes } from './routes/index';
+import { getSessionData } from './session/Session';
 
 const main = async () => {
     try {
@@ -25,19 +26,12 @@ const main = async () => {
             })
         );
 
-        app.use(
-            session({
-                secret: process.env.CLIENT_SECRET || 'public',
-                resave: false,
-                saveUninitialized: true,
-                name: 'session',
-                cookie: {
-                    secure: false,
-                    httpOnly: true,
-                },
-            })
-        );
+        const sessionData = await getSessionData();
+        app.use(session(sessionData));
+
+        const router = await loadRoutes();
         app.use(router);
+
         const bd = await sequelize.sync();
         if (bd) console.log('Se la bd se ha conectado y actualizado exitosamente xd');
         else console.log('Ha ocurrido un error con la bd', bd);
