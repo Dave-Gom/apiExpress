@@ -29,14 +29,14 @@ export const LoginController = async (req: Request, res: Response) => {
     }
 };
 
-export const SessionController = async (req: Request, res: Response) => {
-    try {
-        if (req.session && req.session.id) {
-            res.send(req.session.id);
-        } else {
-            handleHttp(res, false, 401);
-        }
-    } catch (error) {
-        handleHttp(res, `${error}`);
-    }
-};
+// export const SessionController = async (req: Request, res: Response) => {
+//     try {
+//         if (req && req.session.id) {
+//             res.send(req.session.id);
+//         } else {
+//             handleHttp(res, false, 401);
+//         }
+//     } catch (error) {
+//         handleHttp(res, `${error}`);
+//     }
+// };
