@@ -7,8 +7,9 @@ import { encript, verify } from '../utils/password.handler';
 export const registerNewUser = async (userData: UserInterface) => {
     const { email, password } = userData;
     try {
-        const check = await User.findOne({ where: { email } });
-        if (check) throw 'Usuario ya existe';
+        const check = await User.findAll({ where: { email } });
+
+        if (check.length != 0) throw 'Usuario ya existe';
         else {
             const passwordHash = await encript(password);
             const registerNewUser = await User.create({ ...userData, password: passwordHash });
