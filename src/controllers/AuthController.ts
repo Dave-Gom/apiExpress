@@ -15,7 +15,7 @@ export const RegisterController = async ({ body }: Request, res: Response) => {
 
 export const LoginController = async (req: Request, res: Response) => {
     try {
-        let { body } = req;
+        let { body, session } = req;
         const dato = await loginUser(body);
         if (dato.token) {
             res.send({ dato: dato.data });
@@ -26,15 +26,3 @@ export const LoginController = async (req: Request, res: Response) => {
         handleHttp(res, `${error}`);
     }
 };
-
-// export const SessionController = async (req: Request, res: Response) => {
-//     try {
-//         if (req && req.session.id) {
-//             res.send(req.session.id);
-//         } else {
-//             handleHttp(res, false, 401);
-//         }
-//     } catch (error) {
-//         handleHttp(res, `${error}`);
-//     }
-// };
