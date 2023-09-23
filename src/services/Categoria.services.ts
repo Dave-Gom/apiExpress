@@ -1,8 +1,9 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { Categoria } from '../database/models/Categorias';
 import { Post } from '../database/models/Post';
-import { PostCategorias } from '../database/models/PostCategorias';
-import { CategoriaInterface, PostCategoriasInterface } from '../interfaces/Categoria.interface';
+import { User } from '../database/models/user';
+import { CategoriaInterface } from '../interfaces/Categoria.interface';
+import { CategoriaInstance } from '../interfaces/Instances.interface';
 
 export const postCategoria = async (data: CategoriaInterface, user: number) => {
     try {
@@ -20,8 +21,35 @@ export const postCategoria = async (data: CategoriaInterface, user: number) => {
 
 export const getCategorias = async () => {
     try {
-        const responseInsert = await Categoria.findAll<Model<CategoriaInterface>>({ where: { deletedAt: null } });
-        if (responseInsert) return responseInsert;
+        const responseCategoria = await Categoria.findAll<CategoriaInstance>({
+            where: { deletedAt: null },
+            include: [
+                Post,
+                {
+                    model: User,
+                    foreignKey: 'author',
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt', 'role', 'updatedBy', 'author'],
+                    },
+                    as: 'categoriaAuthor',
+                },
+                {
+                    model: User,
+                    foreignKey: 'postCategorias',
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt', 'role', 'updatedBy', 'author'],
+                    },
+                    as: 'categoriaEditor',
+                },
+            ],
+            attributes: {
+                exclude: ['createdAt', 'deletedAt'],
+            },
+        });
+
+        if (responseCategoria) {
+            return responseCategoria;
+        }
         return null;
     } catch (error) {
         return null;
@@ -46,7 +74,7 @@ export const putCategoria = async ({ active, nombre }: CategoriaInterface, id: s
                 where: { id },
             }
         );
-        if (categoria !== null) return 'Actualizado exitosamente';
+        if (categoria !== null) return true;
         return null;
     } catch (error) {
         return null;
@@ -64,29 +92,6 @@ export const softDeleteCategoria = async (id: string, user: number) => {
         if (categoria !== null) return { status: 'ok' };
         return null;
     } catch (error) {
-        return null;
-    }
-};
-
-export const attachPost = async (idCategoria: number, idPost: number) => {
-    try {
-        const categoria = await Categoria.findByPk<Model<CategoriaInterface>>(idCategoria);
-        const post = await Post.findByPk<Model<CategoriaInterface>>(idPost);
-
-        if (categoria && post) {
-            const relacion = await PostCategorias.create<Model<PostCategoriasInterface>>({
-                idCategoria: categoria.dataValues.id,
-                idPost: post.dataValues.id,
-            });
-            console.log(relacion);
-
-            if (relacion) {
-                return relacion;
-            }
-        }
-        return null;
-    } catch (error) {
-        console.log('Hubo un error', error);
         return null;
     }
 };

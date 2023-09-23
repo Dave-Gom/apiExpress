@@ -1,19 +1,15 @@
 import { DataType, Model } from 'sequelize-typescript';
-import { CategoriaInterface } from '../../interfaces/Categoria.interface';
-import { sequelize } from '../database';
-import { User } from './user';
+import { SectionRecomendadoInterface } from '../../../interfaces/Post.interface';
+import { sequelize } from '../../database';
+import { User } from '../user';
 
-const Categoria = sequelize.define<Model, CategoriaInterface>(
-    'categorias',
+const SectionRecomendado = sequelize.define<Model, SectionRecomendadoInterface>(
+    'sectionRecomendado',
     {
         id: {
             type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-        },
-        active: {
-            type: DataType.BOOLEAN,
-            defaultValue: false,
         },
         author: {
             type: DataType.INTEGER,
@@ -22,9 +18,8 @@ const Categoria = sequelize.define<Model, CategoriaInterface>(
                 key: 'id',
             },
         },
-        nombre: {
-            type: DataType.STRING,
-            allowNull: false,
+        position: {
+            type: DataType.INTEGER,
         },
         updatedBy: {
             type: DataType.INTEGER,
@@ -33,14 +28,11 @@ const Categoria = sequelize.define<Model, CategoriaInterface>(
                 key: 'id',
             },
         },
-        deletedAt: {
-            type: DataType.DATE,
-            defaultValue: null,
-        },
     },
     {
         timestamps: true,
+        deletedAt: true,
     }
 );
 
-export { Categoria };
+export { SectionRecomendado };

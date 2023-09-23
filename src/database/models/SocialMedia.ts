@@ -1,28 +1,25 @@
 import { DataType, Model } from 'sequelize-typescript';
-import { CategoriaInterface } from '../../interfaces/Categoria.interface';
+import { SocialMediaInterface } from '../../interfaces/SocialMedia';
 import { sequelize } from '../database';
 import { User } from './user';
 
-const Categoria = sequelize.define<Model, CategoriaInterface>(
-    'categorias',
+const SocialMedia = sequelize.define<Model, SocialMediaInterface>(
+    'media',
     {
         id: {
             type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        active: {
-            type: DataType.BOOLEAN,
-            defaultValue: false,
+        enlace: {
+            type: DataType.STRING,
+            allowNull: false,
         },
-        author: {
-            type: DataType.INTEGER,
-            references: {
-                model: User,
-                key: 'id',
-            },
+        media: {
+            type: DataType.STRING,
+            allowNull: false,
         },
-        nombre: {
+        username: {
             type: DataType.STRING,
             allowNull: false,
         },
@@ -32,15 +29,21 @@ const Categoria = sequelize.define<Model, CategoriaInterface>(
                 model: User,
                 key: 'id',
             },
+            allowNull: false,
         },
-        deletedAt: {
-            type: DataType.DATE,
-            defaultValue: null,
+        author: {
+            type: DataType.INTEGER,
+            references: {
+                model: User,
+                key: 'id',
+            },
+            allowNull: false,
         },
     },
     {
         timestamps: true,
+        deletedAt: true,
     }
 );
 
-export { Categoria };
+export { SocialMedia };

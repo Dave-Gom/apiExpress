@@ -1,17 +1,4 @@
-// export interface Sections {
-//     id: number;
-//     pageId: number;
-//     sectionType: string;
-//     position: number;
-// }
-
-export interface TextSections {
-    id?: number;
-    pageId: number;
-    textSectionId: number;
-}
-
-export interface TextSection {
+export interface TextSectionInterface {
     id: number;
     content: string;
     author: number;
@@ -42,17 +29,30 @@ export interface OfertaSections {
     ofertaSectionId: number;
 }
 
-export interface OfertaSection {
+export interface OfertaSectionInterface {
     id: number;
     title: string;
     content?: string;
     principalImage: string;
+    prevContent: string;
     leftImage: string;
     rigthImage: string;
     position: number;
+    buttonText: string;
     author: number;
     navegate: string;
     updatedBy: number;
+}
+
+export interface ListInterface {
+    id: number;
+    title: string;
+    description?: string;
+    limit?: number;
+    author: number;
+    position: number;
+    updatedBy: number;
+    buttonText?: string;
 }
 
 export enum SectionTypesEnum {

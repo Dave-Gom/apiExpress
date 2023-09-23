@@ -1,51 +1,56 @@
-import { DataTypes, Model } from 'sequelize';
-import { OfertaSection } from '../../../interfaces/Section.interface';
+import { DataType, Model } from 'sequelize-typescript';
+import { OfertaSectionInterface } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
-import { Page } from '../Pages';
 import { User } from '../user';
-import { OfertasSectionPages } from './OfertaSectionPages';
 
-const OfertaSection = sequelize.define<Model, OfertaSection>(
+const OfertaSection = sequelize.define<Model, OfertaSectionInterface>(
     'ofertaSection',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         content: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
+            allowNull: false,
+        },
+        prevContent: {
+            type: DataType.STRING,
+            allowNull: false,
+        },
+        buttonText: {
+            type: DataType.STRING,
             allowNull: false,
         },
         author: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
             },
-            allowNull: false,
         },
         leftImage: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         navegate: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         position: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
         },
         principalImage: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         rigthImage: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
         },
         title: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
         updatedBy: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
@@ -56,13 +61,5 @@ const OfertaSection = sequelize.define<Model, OfertaSection>(
         timestamps: true,
     }
 );
-
-OfertaSection.belongsTo(User, {
-    foreignKey: 'author',
-});
-
-OfertaSection.belongsToMany(Page, {
-    through: OfertasSectionPages,
-});
 
 export { OfertaSection };

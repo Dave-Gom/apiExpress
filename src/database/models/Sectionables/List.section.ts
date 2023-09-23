@@ -1,19 +1,35 @@
 import { DataType, Model } from 'sequelize-typescript';
-import { TextSectionInterface } from '../../../interfaces/Section.interface';
+import { ListInterface } from '../../../interfaces/Section.interface';
 import { sequelize } from '../../database';
 import { User } from '../user';
 
-const TextSection = sequelize.define<Model, TextSectionInterface>(
-    'textSections',
+const ListSection = sequelize.define<Model, ListInterface>(
+    'listSection',
     {
         id: {
             type: DataType.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        content: {
-            type: DataType.TEXT,
+        title: {
+            type: DataType.STRING,
             allowNull: false,
+        },
+        buttonText: {
+            type: DataType.STRING,
+            allowNull: true,
+        },
+        description: {
+            type: DataType.STRING,
+            allowNull: true,
+            defaultValue: null,
+        },
+        position: {
+            type: DataType.INTEGER,
+            allowNull: false,
+        },
+        limit: {
+            type: DataType.INTEGER,
         },
         author: {
             type: DataType.INTEGER,
@@ -23,21 +39,19 @@ const TextSection = sequelize.define<Model, TextSectionInterface>(
             },
             allowNull: false,
         },
-        position: {
-            type: DataType.INTEGER,
-            allowNull: false,
-        },
         updatedBy: {
             type: DataType.INTEGER,
             references: {
                 model: User,
                 key: 'id',
             },
+            allowNull: false,
         },
     },
     {
         timestamps: true,
+        deletedAt: true,
     }
 );
 
-export { TextSection };
+export { ListSection };

@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { User } from '../database/models/user';
 import { UserInterface } from '../interfaces/User.interface';
 import {
-    attachPost,
     getCategoria,
     getCategorias,
     postCategoria,
@@ -30,15 +29,12 @@ export const createCategoria = async ({ body }: Request, res: Response) => {
 
 export const readCategorias = async ({ body }: Request, res: Response) => {
     try {
-        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-        if (user) {
-            const responseItem = await getCategorias();
-            if (responseItem) {
-                res.send(responseItem);
-            } else {
-                throw new Error(`No se pudo obtener las categoria`);
-            }
-        } else throw new Error(`Usuario no existe ${body.user}`);
+        const responseItem = await getCategorias();
+        if (responseItem) {
+            res.send(responseItem);
+        } else {
+            throw new Error(`No se pudo obtener las categorias`);
+        }
     } catch (e) {
         handleHttp(res, `ERROR_GET_CATEGORIES: ${e}`);
     }
@@ -85,22 +81,6 @@ export const deleteCategoria = async ({ body, params }: Request, res: Response) 
                 res.send(responseItem);
             } else {
                 throw new Error(`No se pudo eliminar la categoria con id ${params.id}`);
-            }
-        } else throw new Error(`Usuario no existe ${body.user}`);
-    } catch (e) {
-        handleHttp(res, `ERROR_DELETE_CATEGORY: ${e}`);
-    }
-};
-
-export const addPost = async ({ body, params }: Request, res: Response) => {
-    try {
-        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-        if (user) {
-            const responseItem = await attachPost(parseInt(params.categoriaId, 10), parseInt(params.postId, 10));
-            if (responseItem) {
-                res.send(responseItem);
-            } else {
-                throw new Error(`No se pudo agregar a la categoria`);
             }
         } else throw new Error(`Usuario no existe ${body.user}`);
     } catch (e) {
