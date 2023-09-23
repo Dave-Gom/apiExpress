@@ -15,8 +15,6 @@ export const RegisterController = async ({ body }: Request, res: Response) => {
 
 export const LoginController = async (req: Request, res: Response) => {
     try {
-        console.log('Aca\n');
-
         let { body } = req;
         const dato = await loginUser(body);
         if (dato.token) {

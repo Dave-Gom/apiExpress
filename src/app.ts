@@ -1,3 +1,4 @@
+import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
@@ -20,17 +21,15 @@ const main = async () => {
         app.use(express.static('storage'));
         app.use(express.json());
 
-        // app.use(
-        //     cors({
-        //         origin: 'http://localhost:3000',
-        //         credentials: true,
-        //     })
-        // );
+        app.use(
+            cors({
+                origin: 'http://localhost:3000',
+                credentials: true,
+            })
+        );
 
         const sessionData = await getSessionData();
         app.use(session(sessionData));
-
-        console.log(router);
         app.use(router);
 
         const bd = await sequelize.sync();

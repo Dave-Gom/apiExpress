@@ -26,9 +26,7 @@ export const registerNewUser = async (userData: UserInterface) => {
 
 export const loginUser = async ({ email, password }: AuthInterface) => {
     try {
-        console.log('Ahora aca');
-
-        const check = await User.findOne({ where: { email } });
+        const check = await User.findOne<Model<UserInterface>>({ where: { email } });
         if (check && check.dataValues) {
             const isCorrect = await verify(password, check.dataValues.password);
             if (isCorrect) {
