@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { createSocialMedia, readSocialMedia, removeSocialMedia, updateSocialMedia } from '../controllers/SocialMedia';
-import { checkJWT } from '../middlewares/Session';
+import { checkSession } from '../middlewares/Session';
 
 const router = Router();
 
-router.post('/', checkJWT, createSocialMedia);
-router.get('/', checkJWT, readSocialMedia);
-router.put('/:id', checkJWT, updateSocialMedia);
-router.delete('/:id', checkJWT, removeSocialMedia);
+router.post('/', checkSession, createSocialMedia);
+router.get('/', checkSession, readSocialMedia);
+router.put('/:id', checkSession, updateSocialMedia);
+router.delete('/:id', checkSession, removeSocialMedia);
 
 export { router };

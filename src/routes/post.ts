@@ -8,16 +8,16 @@ import {
     readPublishedPost,
     updatePost,
 } from '../controllers/PostController';
-import { checkJWT } from '../middlewares/Session';
+import { checkSession } from '../middlewares/Session';
 
 const router = Router();
 
-router.post('/', checkJWT, createPost);
+router.post('/', checkSession, createPost);
 router.get('/', readPosts);
 router.get('/posts/active', readActivePosts);
 router.get('/active/:id', readPublishedPost);
-router.get('/:id', checkJWT, readPost);
-router.put('/:id', checkJWT, updatePost);
-router.delete('/:id', checkJWT, deletePost);
+router.get('/:id', checkSession, readPost);
+router.put('/:id', checkSession, updatePost);
+router.delete('/:id', checkSession, deletePost);
 
 export { router };

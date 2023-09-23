@@ -6,14 +6,14 @@ import {
     readSection,
     updateSection,
 } from '../controllers/SectionController';
-import { checkJWT } from '../middlewares/Session';
+import { checkSession } from '../middlewares/Session';
 
 const router = Router();
 
-router.post('/:type/:pageId?', checkJWT, createSection);
-router.get('/:type', checkJWT, readSection);
-router.put('/:type/:id/', checkJWT, updateSection);
-router.post('/ADD/POSTS/:id', checkJWT, addListPosts);
-router.delete('/:type/:id', checkJWT, deletSection);
+router.post('/:type/:pageId?', checkSession, createSection);
+router.get('/:type', checkSession, readSection);
+router.put('/:type/:id/', checkSession, updateSection);
+router.post('/ADD/POSTS/:id', checkSession, addListPosts);
+router.delete('/:type/:id', checkSession, deletSection);
 
 export { router };

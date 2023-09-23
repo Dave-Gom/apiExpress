@@ -5,7 +5,7 @@ export interface UserRequest extends Request {
     user?: string | JwtPayload;
 }
 
-export const checkJWT = (req: UserRequest, res: Response, next: NextFunction) => {
+export const checkSession = (req: UserRequest, res: Response, next: NextFunction) => {
     try {
         console.log('hola');
 

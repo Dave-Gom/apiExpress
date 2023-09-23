@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { getUsers } from '../controllers/UserController';
-import { checkJWT } from '../middlewares/Session';
+import { checkSession } from '../middlewares/Session';
 
 const router = Router();
 
-router.get('/', checkJWT, getUsers);
+router.get('/', checkSession, getUsers);
 
 export { router };
