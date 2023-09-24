@@ -61,13 +61,10 @@ export const readPost = async ({ body, params }: Request, res: Response) => {
     }
 };
 
-export const readPublishedPost = async ({ body, params }: Request, res: Response) => {
+export const readPublishedPost = async ({ params }: Request, res: Response) => {
     try {
-        const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-        if (user) {
-            const responseItem = await getPost(params.id);
-            res.send(responseItem);
-        } else throw new Error(`Usuario no existe ${body.user}`);
+        const responseItem = await getPost(params.id);
+        res.send(responseItem);
     } catch (e) {
         handleHttp(res, `ERROR_GET_POST: ${e}`);
     }
