@@ -15,10 +15,10 @@ export const RegisterController = async ({ body }: Request, res: Response) => {
 
 export const LoginController = async (req: Request, res: Response) => {
     try {
-        let { body, session } = req;
+        let { body } = req;
         const dato = await loginUser(body);
         if (dato.token) {
-            res.send({ dato: dato.data });
+            res.send({ dato: dato, token: dato.token });
         } else {
             handleHttp(res, dato, 401);
         }

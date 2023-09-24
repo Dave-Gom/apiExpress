@@ -1,21 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { JwtPayload } from 'jsonwebtoken';
+import { Session } from 'express-session';
+import { virifyToken } from '../utils/jdt.handler';
 
-export interface UserRequest extends Request {
-    user?: string | JwtPayload;
-}
-
-export const checkSession = (req: UserRequest, res: Response, next: NextFunction) => {
+export const checkSession = (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('hola');
-
-        if (!req) {
-            res.statusCode = 401;
-            res.send('Session invalida');
-        } else {
-            next();
-        }
-        /* 
         const jwtByUser = req.headers.authorization || '';
         const jwt = jwtByUser.split(' ').pop();
         const isUser = virifyToken(`${jwt}`);
@@ -24,10 +12,20 @@ export const checkSession = (req: UserRequest, res: Response, next: NextFunction
             res.statusCode = 401;
             res.send('Invalid JWT');
         } else {
-            req.body.user = isUser;
-            next();
-        } */
+            req.sessionStore.get(req.sessionID, (sesion: Session | null | undefined) => {
+                if (sesion) {
+                    req.body.user = isUser;
+                    next();
+                } else {
+                    console.log('No hay sesion');
+                    res.statusCode = 401;
+                    res.send('Sesion no valida');
+                }
+            });
+        }
     } catch (error) {
+        console.log(error);
+
         res.statusCode = 401;
         res.send('Sesion no valida');
     }

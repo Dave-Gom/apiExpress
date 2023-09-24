@@ -5,8 +5,9 @@ import { UserInterface } from '../interfaces/User.interface';
 import { detelePageService, getPageById, getPagesService, insertPage, updatePage } from '../services/Page.services';
 import { handleHttp } from '../utils/error.handler';
 
-export const postCreatePage = async ({ body }: Request, res: Response) => {
+export const postCreatePage = async (req: Request, res: Response) => {
     try {
+        const { body } = req;
         const user = await User.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
         if (user) {
             const responseItem = await insertPage(body, user.dataValues.id);

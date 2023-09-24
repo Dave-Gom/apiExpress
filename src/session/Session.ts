@@ -13,6 +13,7 @@ export const getSessionData = async () => {
             cookie: {
                 secure: false,
                 httpOnly: true,
+                expires: null,
             },
         };
 
