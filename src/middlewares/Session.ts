@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Session } from 'express-session';
 import { virifyToken } from '../utils/jdt.handler';
 
 export const checkSession = (req: Request, res: Response, next: NextFunction) => {
@@ -12,14 +11,16 @@ export const checkSession = (req: Request, res: Response, next: NextFunction) =>
             res.statusCode = 401;
             res.send('Invalid JWT');
         } else {
-            req.sessionStore.get(req.sessionID, (sesion: Session | null | undefined) => {
-                if (sesion) {
+            req.sessionStore.get(req.sessionID, (err, sessionData) => {
+                if (err) {
+                    throw 'Error en la sesion';
+                } else if (sessionData) {
+                    // La sesión se ha encontrado en Redis
                     req.body.user = isUser;
+                    console.log('Datos de sesión en Redis:', sessionData);
                     next();
                 } else {
-                    console.log('No hay sesion');
-                    res.statusCode = 401;
-                    res.send('Sesion no valida');
+                    throw 'Sesion expirada';
                 }
             });
         }
