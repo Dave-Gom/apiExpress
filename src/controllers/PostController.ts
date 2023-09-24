@@ -5,7 +5,7 @@ import { User } from '../database/models/user';
 import { UserInterface } from '../interfaces/User.interface';
 
 import { PostInterface } from '../interfaces/Post.interface';
-import { delPost, getActivePosts, getPost, getPosts, insertPost, putPost } from '../services/Post';
+import { activePosts, delPost, getActivePosts, getPost, getPosts, insertPost, putPost } from '../services/Post';
 import { handleHttp } from '../utils/error.handler';
 
 export const createPost = async ({ body, params }: Request, res: Response) => {
@@ -63,7 +63,7 @@ export const readPost = async ({ body, params }: Request, res: Response) => {
 
 export const readPublishedPost = async ({ params }: Request, res: Response) => {
     try {
-        const responseItem = await getPost(params.id);
+        const responseItem = await activePosts(parseInt(params.id, 10));
         res.send(responseItem);
     } catch (e) {
         handleHttp(res, `ERROR_GET_POST: ${e}`);

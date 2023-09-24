@@ -6,9 +6,3 @@ export interface CategoriaInterface {
     active: string;
     deletedAt: Date | null;
 }
-
-export interface PostCategoriasInterface {
-    id?: number;
-    idCategoria: number;
-    idPost: number;
-}

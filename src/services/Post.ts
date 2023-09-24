@@ -107,10 +107,11 @@ export const getPost = async (id: string) => {
     }
 };
 
-export const activePosts = async (id: string) => {
+export const activePosts = async (id: number) => {
     try {
-        const posts = await Post.findOne<Model<PostInterface>>({
+        const posts = await Post.findOne<PostInstance>({
             where: { id, deletedAt: null, active: true },
+            include: [Categoria],
         });
         if (posts) return posts;
         return null;
