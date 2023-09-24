@@ -22,6 +22,8 @@ export const insertPage = async (page: PageInteface, user: number) => {
 
 export const getPagesService = async (condition?: string) => {
     try {
+        console.log('cargando paginas');
+
         const responseInsert = await Page.findAll<PageInstance>({
             where: condition ? getCondition(condition) : undefined,
             include: [
@@ -37,6 +39,9 @@ export const getPagesService = async (condition?: string) => {
                     include: [
                         {
                             model: Post,
+                            where: {
+                                active: true,
+                            },
                         },
                     ],
                 },
@@ -45,6 +50,9 @@ export const getPagesService = async (condition?: string) => {
                     include: [
                         {
                             model: Post,
+                            where: {
+                                active: true,
+                            },
                         },
                     ],
                 },
