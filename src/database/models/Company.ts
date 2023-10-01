@@ -1,6 +1,7 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { CompanyInterface } from '../../interfaces/Company.interface';
 import { sequelize } from '../database';
+import { User } from './user';
 
 const Company = sequelize.define<Model, CompanyInterface>(
     'companies',
@@ -9,10 +10,6 @@ const Company = sequelize.define<Model, CompanyInterface>(
             type: DataType.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-        },
-        email: {
-            type: DataType.STRING,
-            allowNull: false,
         },
         name: {
             type: DataType.STRING,
@@ -29,6 +26,25 @@ const Company = sequelize.define<Model, CompanyInterface>(
         },
         since: {
             type: DataType.STRING,
+        },
+        description: {
+            type: DataType.STRING,
+        },
+        author: {
+            type: DataType.INTEGER,
+            allowNull: false,
+            references: {
+                model: User,
+                key: 'id',
+            },
+        },
+        updatedBy: {
+            type: DataType.INTEGER,
+            references: {
+                model: User,
+                key: 'id',
+            },
+            allowNull: false,
         },
     },
     {
