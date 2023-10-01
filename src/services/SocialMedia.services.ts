@@ -60,8 +60,6 @@ export const deleteSocialMedia = async (id: number, user: number) => {
             },
             { where: { id } }
         );
-        console.log('hola');
-
         if (response.length > 0) {
             const deleteResponse = await SocialMedia.destroy<Model<SocialMediaInterface>>({ where: { id } });
             return deleteResponse;

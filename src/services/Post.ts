@@ -16,7 +16,6 @@ export const insertPost = async (data: PostInterface, user: number, categorias?:
             if (categorias) {
                 for (const categoriaId of categorias) {
                     const categoria = await Categoria.findByPk<CategoriaInstance>(categoriaId, { include: [Post] });
-                    console.log(`Categoria No. ${categoriaId}`, categoria);
                     if (categoria && categoria.addPost && responseInsert && responseInsert.addCategoria) {
                         await categoria.addPost(responseInsert);
                         await responseInsert.addCategoria(categoria);

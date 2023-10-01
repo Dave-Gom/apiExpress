@@ -54,7 +54,6 @@ export const insertHeroSection = async (section: HeroSectionInterface, page: Pag
 
 export const insertOfertaSection = async (section: OfertaSectionInterface, page: PageInstance | null, user: number) => {
     try {
-        console.log(user);
         const responseInsert = await OfertaSection.create<OfertaInstance>(
             {
                 ...section,
@@ -114,7 +113,6 @@ export const insertListSection = async (secction: ListInterface, page: PageInsta
             if (page && page.addListSection) {
                 await page.addListSection(responseInsert);
                 await responseInsert.addPage(page);
-                console.log('lista agregada');
             }
             return responseInsert;
         }

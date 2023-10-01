@@ -17,7 +17,6 @@ export const checkSession = (req: Request, res: Response, next: NextFunction) =>
                 } else if (sessionData) {
                     // La sesión se ha encontrado en Redis
                     req.body.user = isUser;
-                    console.log('Datos de sesión en Redis:', sessionData);
                     next();
                 } else {
                     throw 'Sesion expirada';

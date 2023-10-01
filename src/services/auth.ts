@@ -33,8 +33,6 @@ export const loginUser = async ({ email, password }: AuthInterface) => {
                 const token = await generateToken(check.dataValues.email);
                 const data: loginResponse = { token, data: check.dataValues };
                 return data;
-            } else {
-                console.log('Aca no fue correcto\n');
             }
         }
         const incorrect: loginResponse = { token: null, data: 'Usuario o contraseña incorrectos' };

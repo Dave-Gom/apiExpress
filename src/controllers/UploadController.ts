@@ -10,10 +10,7 @@ import { handleHttp } from '../utils/error.handler';
 const getFile = async (req: Request, res: Response) => {
     try {
         const { body, file } = req;
-        console.log(req);
-
         const userInstance = await UserModel.findOne<Model<UserInterface>>({ where: { email: body.user.id } });
-
         if (userInstance) {
             if (file) {
                 const dataToRegister: StorageInterface = {

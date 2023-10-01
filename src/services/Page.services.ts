@@ -64,9 +64,7 @@ export const getPagesService = async (condition?: string) => {
         }
         return null;
     } catch (error) {
-        console.error('Error al optener las paginas');
-        console.log(error);
-
+        console.error('Error al optener las paginas', error);
         return null;
     }
 };
