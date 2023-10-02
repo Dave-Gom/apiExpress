@@ -14,14 +14,17 @@ const SocialMedia = sequelize.define<Model, SocialMediaInterface>(
         enlace: {
             type: DataType.STRING,
             allowNull: false,
+            unique: true,
         },
         media: {
             type: DataType.STRING,
             allowNull: false,
+            unique: true,
         },
         username: {
             type: DataType.STRING,
-            allowNull: false,
+            allowNull: true,
+            unique: true,
         },
         updatedBy: {
             type: DataType.INTEGER,
